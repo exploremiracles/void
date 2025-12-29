@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Void | Mind Lattice</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to the official website of Void. Social Network for a World of Problem-Solvers." />
+    <meta name="author" content="Shoaib Ali" />
+    <link rel="icon" type="image/png" href="images.png">
+    
+    
+    <meta property="og:title" content="Void" />
+    <meta property="og:description" content="Social Network for a World of Problem-Solvers." />
+    <meta property="og:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta property="og:url" content="https://www.projectvoid.in" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Void" />
+    
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Void" />
+    <meta name="twitter:description" content="Social Network for a World of Problem-Solvers." />
+    <meta name="twitter:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta name="twitter:site" content="@exploremiracles" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+            --success: #10b981;
+            --error: #ef4444;
+            --card-bg: #ffffff;
+            --sidebar-bg: #1f2937;
+            --content-bg: #f3f4f6;
+            --solved: #10b981;
+        }
+
+        body {
+            background: linear-gradient(120deg, #0A0A0A, #0D1B2A, #000000);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        
+        .sidebar {
+            width: 260px;
+            background: transparent;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 100;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: wheat;
+            margin-right: 0.75rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: wheat;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo small {
+            font-size: 0.7rem;
+            margin-left: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+           background: rgba(245, 222, 179, 0.527);
+        }
+
+        .nav-item i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .nav-item span {
+            font-weight: 500;
+        }
+
+        .user-section {
+            margin-top: auto;
+            padding: 1rem 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background:linear-gradient(45deg, #469c1e, #000000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(239, 68, 68, 0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn i {
+            margin-right: 0.5rem;
+        }
+
+        
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .page-title.minimal {
+    background: linear-gradient(135deg, rgb(247, 211, 146), rgb(252, 215, 146));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: 
+        minimalEntrance 1s ease-out forwards,
+        minimalShimmer 4s ease-in-out infinite;
+    padding: 0.25rem 0.5rem;
+}
+
+@keyframes minimalEntrance {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+        letter-spacing: 5px;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        letter-spacing: normal;
+    }
+}
+
+@keyframes minimalShimmer {
+    0%, 100% {
+        background-position: 0% center;
+        filter: brightness(1);
+    }
+    50% {
+        background-position: 100% center;
+        filter: brightness(1.2);
+    }
+}
+
+.page-title.minimal::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: wheat;
+    animation: minimalUnderline 1.2s ease-out 0.5s forwards;
+}
+
+@keyframes minimalUnderline {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+    100% {
+        width: 100%;
+        left: 0;
+    }
+}
+
+        
+        .toolbar {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .tool-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .tool-btn i {
+            font-size: 0.9rem;
+        }
+
+        
+        .mindflow-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+        }
+
+        #connections-layer {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        #nodes-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            transform: translate(0, 0);
+        }
+
+        
+        .flow-node {
+            position: absolute;
+            min-width: 100px;
+            max-width: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 0.7rem;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.85rem;
+            z-index: 10;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        .flow-node:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        .flow-node.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+        }
+
+        .node-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.3rem;
+        }
+
+        .node-type {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 10px;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+        }
+
+        .node-actions {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .node-action {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .node-action:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .node-content {
+            color: white;
+            font-weight: 500;
+            word-break: break-word;
+            line-height: 1.2;
+            font-size: 0.8rem;
+        }
+
+        .node-input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 500;
+            width: 100%;
+            outline: none;
+            font-size: 0.8rem;
+        }
+
+        
+        .connection {
+            stroke: rgba(99, 102, 241, 0.6);
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+
+        /* Directional Controls for Mobile */
+        .directional-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            z-index: 20;
+        }
+
+        .direction-row {
+            display: flex;
+            gap: 5px;
+        }
+
+        .direction-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .direction-btn:active {
+            background: rgba(99, 102, 241, 0.4);
+            transform: scale(0.95);
+        }
+
+        .direction-btn i {
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+        }
+
+        /* Node Selection Indicator */
+        .selection-indicator {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+            z-index: 15;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .flow-node.selected .selection-indicator {
+            display: flex;
+        }
+
+        
+        .right-panel {
+            position: fixed;
+            right: -280px;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: rgba(31, 41, 55, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem;
+            transition: right 0.3s ease;
+            z-index: 90;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+        }
+
+        .right-panel.open {
+            right: 0;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-title {
+            color: wheat;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .close-panel {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .node-properties {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .property-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .property-label {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        .property-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 0.5rem;
+            color: black;
+            outline: none;
+            font-size: 0.85rem;
+        }
+
+        .property-input:focus {
+            border-color: var(--primary);
+        }
+
+        .color-options {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .color-option.selected {
+            border-color: white;
+            transform: scale(1.1);
+        }
+
+        
+        .templates-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .template-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .template-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .template-icon {
+            font-size: 1.3rem;
+            margin-bottom: 0.4rem;
+            color: wheat;
+        }
+
+        .template-name {
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        
+        @keyframes nodeAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .flow-node.new {
+            animation: nodeAppear 0.3s ease;
+        }
+
+        
+        .toast {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            padding: 10px 16px;
+            border-radius: 6px;
+            background: var(--dark);
+            color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            margin-right: 8px;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 0.8rem;
+            right: 1rem;
+            z-index: 1100;
+           color: wheat;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .zoom-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 5;
+        }
+
+        .zoom-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+          .menu-toggle {
+            display: none;
+        }
+
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 1rem 0.5rem;
+            }
+
+            .logo h1,
+            .nav-item span,
+            .user-info span {
+                display: none;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .logo i {
+                margin-right: 0;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 0.75rem;
+            }
+
+            .nav-item i {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: 80px;
+            }
+            .logout-btn span{
+                display: none;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 0.8rem;
+                margin-left: 0;
+            }
+
+           .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                z-index: 1200;
+    background-color: #000000;
+            }
+
+            /* Show directional controls on mobile */
+            .directional-controls {
+                display: flex;
+            }
+
+            .logout-btn span{
+                display: none;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            .toolbar {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                right: 3rem;
+                z-index: 1100;
+                color: wheat;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .right-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            .flow-node {
+                min-width: 90px;
+                max-width: 130px;
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .node-content {
+                font-size: 0.75rem;
+            }
+
+            .tool-btn span {
+                display: none;
+            }
+
+            .tool-btn {
+                padding: 0.5rem;
+            }
+
+            .templates-panel {
+                grid-template-columns: 1fr;
+            }
+
+            /* Adjust directional controls for smaller screens */
+            .direction-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 0.5rem;
+            }
+
+            .page-title {
+                font-size: 1.3rem;
+            }
+
+            .toolbar {
+                gap: 0.2rem;
+            }
+
+            .tool-btn {
+                padding: 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            .flow-node {
+                min-width: 80px;
+                max-width: 110px;
+                padding: 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .node-content {
+                font-size: 0.7rem;
+            }
+
+            .node-type {
+                font-size: 0.65rem;
+            }
+
+            .node-action {
+                width: 16px;
+                height: 16px;
+            }
+
+            .toast {
+                max-width: 90%;
+                right: 5%;
+                bottom: 10px;
+            }
+
+            .direction-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .flow-node {
+                min-width: 70px;
+                max-width: 100px;
+                padding: 0.4rem;
+            }
+
+            .node-content {
+                font-size: 0.65rem;
+            }
+
+            .direction-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fa-solid fa-cube"></i>
+    </div>
+
+    
+    <div class="toast" id="toast"></div>
+
+    
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-cube"></i>
+            <h1> Void</h1>
+        </div>
+
+        <a href="os.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+        <i class="fa-solid fa-cubes"></i>
+        <span>VoidOS</span>
+      </div>
+       </a>
+
+        <a href="dashboard.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        </a>
+
+        <a href="users.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </div>
+        </a>
+
+        <a href="chain.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-link"></i>
+            <span>Synaptic Chain</span>
+        </div>
+        </a>
+
+        <a href="profile.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>My Profile</span>
+        </div>
+        </a>
+
+<a href="timeline.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Timeline</span>
+        </div>
+        </a>
+
+<a href="status.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fa-solid fa-water"></i>
+            <span>Wave</span>
+        </div>
+        </a>
+
+<a href="Saved.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-dna"></i>
+            <span>Saved</span>
+        </div>
+        </a>
+
+<a href="personal.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-sticky-note"></i>
+            <span>My Personal Space</span>
+        </div>
+        </a>
+
+        <a href="articles.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-book-open"></i>
+            <span>Research Library</span>
+        </div>
+        </a>
+
+         <a href="voidfeed.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+      <i class="fa-solid fa-rss"></i>
+        <span>VoidFeed</span>
+      </div>
+    </a>
+        
+        <div class="nav-item active">
+            <i class="fas fa-solid fa-cube"></i>
+            <span>Mind Lattice</span>
+        </div>
+
+<hr style="margin: 0; border: 0; border-top: 1px solid #ccc;">
+
+        <a href="time.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+<div class="nav-item">
+            <i class="fas fa-clock" style="font-size: 14px;"></i>
+            <span>Time Insights</span>
+        </div>
+        </a>
+
+<a href="feature.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+        <div class="nav-item">
+            <i class="fas fa-lightbulb" style="font-size: 14px;"></i>
+            <span>Feature Requests</span>
+        </div>
+        </a>
+
+<a href="settings.html" style="color: inherit; text-decoration: none;font-size: 14px;">
+        <div class="nav-item">
+            <i class="fas fa-cog" style="font-size: 14px;"></i>
+            <span>Settings</span>
+        </div>
+        </a>
+
+        <a href="about.html" style="color: inherit; text-decoration: none;font-size: 14px;">
+            <div class="nav-item">
+                <i class="fa-solid fa-terminal" style="font-size: 14px;"></i>
+                <span>About</span>
+            </div>
+        </a>
+
+        <div class="user-section">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">
+                    <div class="loading" id="userLoading"></div>
+                </div>
+                <span id="sidebar-username">Loading...</span>
+            </div>
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+    
+    <div class="main-content">
+        <div class="header">
+            <h2 class="page-title minimal">Mind Lattice</h2>
+            <div class="toolbar">
+                <button class="tool-btn" id="addNodeBtn">
+                    <i class="fas fa-plus"></i>
+                    <span>Add Node</span>
+                </button>
+                <button class="tool-btn" id="connectBtn">
+                    <i class="fas fa-link"></i>
+                    <span>Connect</span>
+                </button>
+                <button class="tool-btn" id="deleteBtn">
+                    <i class="fas fa-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <button class="tool-btn" id="propertiesBtn">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Properties</span>
+                </button>
+                <button class="tool-btn" id="templatesBtn">
+                    <i class="fas fa-th-large"></i>
+                    <span>Templates</span>
+                </button>
+                <button class="tool-btn" id="saveBtn">
+                    <i class="fas fa-save"></i>
+                    <span>Save</span>
+                </button>
+                <button class="tool-btn" id="loadBtn">
+                    <i class="fas fa-download"></i>
+                    <span>Load</span>
+                </button>
+            </div>
+        </div>
+
+        
+        <div class="mindflow-container">
+            <!-- Directional Controls for Mobile -->
+            <div class="directional-controls" id="directionalControls">
+                <div class="direction-row">
+                    <button class="direction-btn" id="moveUpBtn">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+                <div class="direction-row">
+                    <button class="direction-btn" id="moveLeftBtn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button class="direction-btn" id="selectNextBtn">
+                        <i class="fas fa-bullseye"></i>
+                    </button>
+                    <button class="direction-btn" id="moveRightBtn">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="direction-row">
+                    <button class="direction-btn" id="moveDownBtn">
+                        <i class="fas fa-arrow-down"></i>
+                    </button>
+                </div>
+            </div>
+
+            <svg id="connections-layer" width="100%" height="100%">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                    refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="rgba(99, 102, 241, 0.6)" />
+                    </marker>
+                </defs>
+                
+            </svg>
+            <div id="nodes-container">
+                
+            </div>
+            
+            
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoomInBtn">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="zoom-btn" id="zoomOutBtn">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="zoom-btn" id="resetZoomBtn">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="right-panel" id="propertiesPanel">
+        <div class="panel-header">
+            <h3 class="panel-title">Node Properties</h3>
+            <button class="close-panel" id="closeProperties">&times;</button>
+        </div>
+        <div class="node-properties">
+            <div class="property-group">
+                <label class="property-label">Content</label>
+                <input type="text" class="property-input" id="nodeContent" placeholder="Enter node content">
+            </div>
+            <div class="property-group">
+                <label class="property-label">Type</label>
+                <select class="property-input" id="nodeType">
+                    <option value="idea">Idea</option>
+                    <option value="task">Task</option>
+                    <option value="decision">Decision</option>
+                    <option value="note">Note</option>
+                    <option value="goal">Goal</option>
+                </select>
+            </div>
+            <div class="property-group">
+                <label class="property-label">Color</label>
+                <div class="color-options">
+                    <div class="color-option selected" style="background: #6366f1;" data-color="#6366f1"></div>
+                    <div class="color-option" style="background: #ec4899;" data-color="#ec4899"></div>
+                    <div class="color-option" style="background: #10b981;" data-color="#10b981"></div>
+                    <div class="color-option" style="background: #f59e0b;" data-color="#f59e0b"></div>
+                    <div class="color-option" style="background: #ef4444;" data-color="#ef4444"></div>
+                    <div class="color-option" style="background: #8b5cf6;" data-color="#8b5cf6"></div>
+                </div>
+            </div>
+            <button class="tool-btn" id="applyProperties" style="margin-top: 1rem;">
+                <i class="fas fa-check"></i>
+                <span>Apply Changes</span>
+            </button>
+        </div>
+    </div>
+
+    
+    <div class="right-panel" id="templatesPanel">
+        <div class="panel-header">
+            <h3 class="panel-title">Flow Templates</h3>
+            <button class="close-panel" id="closeTemplates">&times;</button>
+        </div>
+        <div class="templates-panel">
+            <div class="template-card" data-template="brainstorm">
+                <div class="template-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="template-name">Brainstorm</div>
+            </div>
+            <div class="template-card" data-template="project">
+                <div class="template-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="template-name">Project Plan</div>
+            </div>
+            <div class="template-card" data-template="decision">
+                <div class="template-icon">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <div class="template-name">Decision Tree</div>
+            </div>
+            <div class="template-card" data-template="workflow">
+                <div class="template-icon">
+                    <i class="fas fa-stream"></i>
+                </div>
+                <div class="template-name">Workflow</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const currentPage = "node";
+            let startTime = Date.now();
+
+            // Load previous value
+            let storedTime = parseInt(localStorage.getItem(`time_${currentPage}`)) || 0;
+
+            // Track today's time
+            const today = new Date().toDateString();
+            let todayStoredTime = parseInt(localStorage.getItem(`time_${currentPage}_${today}`)) || 0;
+
+            setInterval(() => {
+                let secondsOnPage = Math.floor((Date.now() - startTime) / 1000);
+
+                // Update total time for this page
+                storedTime += secondsOnPage;
+                localStorage.setItem(`time_${currentPage}`, storedTime);
+
+                // Update today's time
+                todayStoredTime += secondsOnPage;
+                localStorage.setItem(`time_${currentPage}_${today}`, todayStoredTime);
+
+                // Reset start time
+                startTime = Date.now();
+            }, 10000);
+
+            window.addEventListener('beforeunload', () => {
+                let secondsOnPage = Math.floor((Date.now() - startTime) / 1000);
+                storedTime += secondsOnPage;
+                todayStoredTime += secondsOnPage;
+
+                localStorage.setItem(`time_${currentPage}`, storedTime);
+                localStorage.setItem(`time_${currentPage}_${today}`, todayStoredTime);
+            });
+        // Firebase Configuration - Replace with your actual Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxQoFW6QiaazIcvkEPsYbnTv7zfKe8c-Y",
+            authDomain: "patternetweb.firebaseapp.com",
+            projectId: "patternetweb",
+            storageBucket: "patternetweb.firebasestorage.app",
+            messagingSenderId: "78400752693",
+            appId: "1:78400752693:web:540fbbcab615e6b078b57c"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // Global variables
+        let currentUser = null;
+        let nodes = [];
+        let connections = [];
+        let selectedNode = null;
+        let isConnecting = false;
+        let connectFromNode = null;
+        let canvasOffset = { x: 0, y: 0 };
+        let isDragging = false;
+        let dragStart = { x: 0, y: 0 };
+        let scale = 1;
+        let nodeMoveStep = 10; // Pixels to move per button press
+
+        // DOM Elements
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userAvatar = document.getElementById('user-avatar');
+        const userLoading = document.getElementById('userLoading');
+        const sidebarUsername = document.getElementById('sidebar-username');
+        const toast = document.getElementById('toast');
+        const connectionsLayer = document.getElementById('connections-layer');
+        const nodesContainer = document.getElementById('nodes-container');
+        const addNodeBtn = document.getElementById('addNodeBtn');
+        const connectBtn = document.getElementById('connectBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const propertiesBtn = document.getElementById('propertiesBtn');
+        const templatesBtn = document.getElementById('templatesBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const loadBtn = document.getElementById('loadBtn');
+        const propertiesPanel = document.getElementById('propertiesPanel');
+        const templatesPanel = document.getElementById('templatesPanel');
+        const closeProperties = document.getElementById('closeProperties');
+        const closeTemplates = document.getElementById('closeTemplates');
+        const nodeContent = document.getElementById('nodeContent');
+        const nodeType = document.getElementById('nodeType');
+        const applyProperties = document.getElementById('applyProperties');
+        const colorOptions = document.querySelectorAll('.color-option');
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const resetZoomBtn = document.getElementById('resetZoomBtn');
+        
+        // Directional control elements
+        const moveUpBtn = document.getElementById('moveUpBtn');
+        const moveDownBtn = document.getElementById('moveDownBtn');
+        const moveLeftBtn = document.getElementById('moveLeftBtn');
+        const moveRightBtn = document.getElementById('moveRightBtn');
+        const selectNextBtn = document.getElementById('selectNextBtn');
+
+        // Initialize the application
+        function initApp() {
+            console.log('Initializing Mind Flow with Firebase...');
+            
+            // Set up authentication state listener
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    console.log('User signed in:', user.uid);
+                    
+                    // Load user data from Firestore
+                    await loadUserData();
+                    
+                    // Set up event listeners
+                    setupEventListeners();
+                    
+                    // Load saved mind flow if exists
+                    await loadMindFlow();
+                    
+                    // If no saved data, add a demo node
+                    if (nodes.length === 0) {
+                        addNewNode();
+                    }
+                } else {
+                    // No user is signed in, redirect to login
+                    console.log('No user signed in, redirecting to login...');
+                    window.location.href = 'indexz.html';
+                }
+            });
+        }
+
+        // Load user data from Firestore
+        async function loadUserData() {
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    displayUserInfo(userData);
+                } else {
+                    // Create user document if it doesn't exist
+                    const defaultUserData = {
+                        username: currentUser.email.split('@')[0] || 'User',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    
+                    await db.collection('users').doc(currentUser.uid).set(defaultUserData);
+                    displayUserInfo(defaultUserData);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showToast('Error loading user data', 'error');
+                // Fallback to basic user info
+                displayUserInfo({ username: 'User' });
+            }
+        }
+
+        // Display user information in the sidebar
+        function displayUserInfo(userData) {
+            const username = userData.username || 'User';
+            userAvatar.innerHTML = username.charAt(0).toUpperCase();
+            userLoading.style.display = 'none';
+            sidebarUsername.textContent = username;
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+            // Toolbar buttons
+            addNodeBtn.addEventListener('click', addNewNode);
+            connectBtn.addEventListener('click', toggleConnecting);
+            deleteBtn.addEventListener('click', deleteSelected);
+            propertiesBtn.addEventListener('click', () => togglePanel(propertiesPanel));
+            templatesBtn.addEventListener('click', () => togglePanel(templatesPanel));
+            saveBtn.addEventListener('click', saveMindFlow);
+            loadBtn.addEventListener('click', loadMindFlow);
+            
+            // Panel controls
+            closeProperties.addEventListener('click', () => togglePanel(propertiesPanel, false));
+            closeTemplates.addEventListener('click', () => togglePanel(templatesPanel, false));
+            applyProperties.addEventListener('click', applyNodeProperties);
+            
+            // Color options
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Canvas interactions (for desktop)
+            nodesContainer.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', endDrag);
+            nodesContainer.addEventListener('click', canvasClick);
+            
+            // Directional controls (for mobile)
+            moveUpBtn.addEventListener('click', () => moveSelectedNode('up'));
+            moveDownBtn.addEventListener('click', () => moveSelectedNode('down'));
+            moveLeftBtn.addEventListener('click', () => moveSelectedNode('left'));
+            moveRightBtn.addEventListener('click', () => moveSelectedNode('right'));
+            selectNextBtn.addEventListener('click', selectNextNode);
+            
+            // Template cards
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    loadTemplate(this.dataset.template);
+                });
+            });
+            
+            // Zoom controls
+            zoomInBtn.addEventListener('click', zoomIn);
+            zoomOutBtn.addEventListener('click', zoomOut);
+            resetZoomBtn.addEventListener('click', resetZoom);
+            
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', toggleSidebar);
+            logoutBtn.addEventListener('click', logout);
+            
+            console.log('Event listeners set up successfully');
+        }
+
+        // Add a new node to the canvas
+        function addNewNode() {
+            const newNode = {
+                id: 'node_' + Date.now(),
+                x: 100 + Math.random() * 200,
+                y: 100 + Math.random() * 200,
+                content: 'New Idea',
+                type: 'idea',
+                color: '#6366f1'
+            };
+            
+            nodes.push(newNode);
+            renderNode(newNode);
+            
+            // Auto-select the new node
+            selectNode(newNode);
+            
+            showToast('New node added', 'success');
+        }
+
+        // Render a node on the canvas
+        function renderNode(node) {
+            // Create node element
+            const nodeElement = document.createElement('div');
+            nodeElement.className = 'flow-node new';
+            nodeElement.id = node.id;
+            nodeElement.style.left = node.x + 'px';
+            nodeElement.style.top = node.y + 'px';
+            nodeElement.style.borderColor = node.color;
+            
+            nodeElement.innerHTML = `
+                <div class="selection-indicator">
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="node-header">
+                    <span class="node-type">${node.type}</span>
+                    <div class="node-actions">
+                        <div class="node-action" data-action="edit">✏️</div>
+                        <div class="node-action" data-action="connect">🔗</div>
+                    </div>
+                </div>
+                <div class="node-content">${node.content}</div>
+            `;
+            
+            // Add event listeners to node (for desktop)
+            nodeElement.addEventListener('mousedown', startNodeDrag);
+            nodeElement.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectNode(node);
+            });
+            
+            // Add event listeners to node actions
+            const editBtn = nodeElement.querySelector('[data-action="edit"]');
+            const connectBtn = nodeElement.querySelector('[data-action="connect"]');
+            
+            if (editBtn) {
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectNode(node);
+                    togglePanel(propertiesPanel, true);
+                });
+            }
+            
+            if (connectBtn) {
+                connectBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    startConnection(node);
+                });
+            }
+            
+            nodesContainer.appendChild(nodeElement);
+            
+            // Remove new class after animation
+            setTimeout(() => {
+                nodeElement.classList.remove('new');
+            }, 300);
+        }
+
+        // Select a node
+        function selectNode(node) {
+            // Deselect previous node
+            if (selectedNode) {
+                const prevNodeElement = document.getElementById(selectedNode.id);
+                if (prevNodeElement) prevNodeElement.classList.remove('selected');
+            }
+            
+            // Select new node
+            selectedNode = node;
+            const nodeElement = document.getElementById(node.id);
+            if (nodeElement) nodeElement.classList.add('selected');
+            
+            // Update properties panel
+            nodeContent.value = node.content;
+            nodeType.value = node.type;
+            
+            // Update color selection
+            colorOptions.forEach(option => {
+                option.classList.remove('selected');
+                if (option.dataset.color === node.color) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            showToast(`Selected: ${node.content}`, 'success');
+        }
+
+        // Select next node (for mobile navigation)
+        function selectNextNode() {
+            if (nodes.length === 0) return;
+            
+            let currentIndex = 0;
+            if (selectedNode) {
+                currentIndex = nodes.findIndex(node => node.id === selectedNode.id);
+            }
+            
+            const nextIndex = (currentIndex + 1) % nodes.length;
+            selectNode(nodes[nextIndex]);
+        }
+
+        // Move selected node in specified direction
+        function moveSelectedNode(direction) {
+            if (!selectedNode) {
+                showToast('Please select a node first', 'error');
+                return;
+            }
+            
+            switch(direction) {
+                case 'up':
+                    selectedNode.y -= nodeMoveStep;
+                    break;
+                case 'down':
+                    selectedNode.y += nodeMoveStep;
+                    break;
+                case 'left':
+                    selectedNode.x -= nodeMoveStep;
+                    break;
+                case 'right':
+                    selectedNode.x += nodeMoveStep;
+                    break;
+            }
+            
+            // Update node position in DOM
+            const nodeElement = document.getElementById(selectedNode.id);
+            if (nodeElement) {
+                nodeElement.style.left = selectedNode.x + 'px';
+                nodeElement.style.top = selectedNode.y + 'px';
+            }
+            
+            updateConnections();
+        }
+
+        // Start dragging a node (desktop only)
+        function startNodeDrag(e) {
+            if (e.target.classList.contains('node-action')) return;
+            
+            const nodeId = e.currentTarget.id;
+            const node = nodes.find(n => n.id === nodeId);
+            if (!node) return;
+            
+            selectNode(node);
+            
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startNodeX = node.x;
+            const startNodeY = node.y;
+            
+            function dragNode(moveEvent) {
+                const dx = moveEvent.clientX - startX;
+                const dy = moveEvent.clientY - startY;
+                
+                node.x = startNodeX + dx;
+                node.y = startNodeY + dy;
+                
+                const nodeElement = document.getElementById(node.id);
+                if (nodeElement) {
+                    nodeElement.style.left = node.x + 'px';
+                    nodeElement.style.top = node.y + 'px';
+                }
+                
+                updateConnections();
+            }
+            
+            function stopDrag() {
+                document.removeEventListener('mousemove', dragNode);
+                document.removeEventListener('mouseup', stopDrag);
+            }
+            
+            document.addEventListener('mousemove', dragNode);
+            document.addEventListener('mouseup', stopDrag);
+            
+            e.preventDefault();
+        }
+
+        // Start connecting nodes
+        function startConnection(node) {
+            if (isConnecting && connectFromNode) {
+                // Complete the connection
+                if (connectFromNode.id !== node.id) {
+                    // Check if connection already exists
+                    const existingConnection = connections.find(conn => 
+                        conn.from === connectFromNode.id && conn.to === node.id
+                    );
+                    
+                    if (!existingConnection) {
+                        connections.push({
+                            from: connectFromNode.id,
+                            to: node.id
+                        });
+                        updateConnections();
+                        showToast('Nodes connected', 'success');
+                    } else {
+                        showToast('Nodes already connected', 'error');
+                    }
+                } else {
+                    showToast('Cannot connect a node to itself', 'error');
+                }
+                isConnecting = false;
+                connectFromNode = null;
+                connectBtn.classList.remove('active');
+            } else {
+                // Start new connection
+                isConnecting = true;
+                connectFromNode = node;
+                connectBtn.classList.add('active');
+                showToast('Click on another node to connect', 'success');
+            }
+        }
+
+        // Toggle connecting mode
+        function toggleConnecting() {
+            isConnecting = !isConnecting;
+            connectBtn.classList.toggle('active');
+            
+            if (isConnecting) {
+                showToast('Click on a node to start connecting', 'success');
+            } else {
+                connectFromNode = null;
+                showToast('Connection mode off', 'success');
+            }
+        }
+
+        // Update connection lines
+        function updateConnections() {
+            // Clear existing connections
+            const existingConnections = connectionsLayer.querySelectorAll('.connection');
+            existingConnections.forEach(conn => conn.remove());
+            
+            // Draw new connections
+            connections.forEach(conn => {
+                const fromNode = nodes.find(n => n.id === conn.from);
+                const toNode = nodes.find(n => n.id === conn.to);
+                
+                if (fromNode && toNode) {
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.classList.add('connection');
+                    line.setAttribute('x1', fromNode.x + 45);
+                    line.setAttribute('y1', fromNode.y + 30);
+                    line.setAttribute('x2', toNode.x + 45);
+                    line.setAttribute('y2', toNode.y + 30);
+                    connectionsLayer.appendChild(line);
+                }
+            });
+        }
+
+        // Delete selected node
+        function deleteSelected() {
+            if (!selectedNode) {
+                showToast('Please select a node first', 'error');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete this node?')) {
+                // Remove node from array
+                nodes = nodes.filter(n => n.id !== selectedNode.id);
+                
+                // Remove connections involving this node
+                connections = connections.filter(conn => 
+                    conn.from !== selectedNode.id && conn.to !== selectedNode.id
+                );
+                
+                // Remove node element from DOM
+                const nodeElement = document.getElementById(selectedNode.id);
+                if (nodeElement) nodeElement.remove();
+                
+                // Update connections
+                updateConnections();
+                
+                selectedNode = null;
+                showToast('Node deleted', 'success');
+            }
+        }
+
+        // Apply node properties
+        function applyNodeProperties() {
+            if (!selectedNode) {
+                showToast('No node selected', 'error');
+                return;
+            }
+            
+            selectedNode.content = nodeContent.value;
+            selectedNode.type = nodeType.value;
+            const selectedColor = document.querySelector('.color-option.selected');
+            if (selectedColor) {
+                selectedNode.color = selectedColor.dataset.color;
+            }
+            
+            // Update node display
+            const nodeElement = document.getElementById(selectedNode.id);
+            if (nodeElement) {
+                nodeElement.querySelector('.node-type').textContent = selectedNode.type;
+                nodeElement.querySelector('.node-content').textContent = selectedNode.content;
+                nodeElement.style.borderColor = selectedNode.color;
+            }
+            
+            showToast('Properties updated', 'success');
+        }
+
+        // Toggle panel visibility
+        function togglePanel(panel, forceState) {
+            const isOpen = panel.classList.contains('open');
+            const shouldOpen = forceState !== undefined ? forceState : !isOpen;
+            
+            // Close other panels
+            document.querySelectorAll('.right-panel').forEach(p => {
+                if (p !== panel) p.classList.remove('open');
+            });
+            
+            if (shouldOpen) {
+                panel.classList.add('open');
+            } else {
+                panel.classList.remove('open');
+            }
+        }
+
+        // Load a template
+        function loadTemplate(templateName) {
+            // Clear existing nodes and connections
+            nodes.forEach(node => {
+                const nodeElement = document.getElementById(node.id);
+                if (nodeElement) nodeElement.remove();
+            });
+            nodes = [];
+            connections = [];
+            
+            // Create template nodes
+            let templateNodes = [];
+            let templateConnections = [];
+            
+            switch(templateName) {
+                case 'brainstorm':
+                    templateNodes = [
+                        { id: 'node_1', x: 150, y: 150, content: 'Central Idea', type: 'idea', color: '#6366f1' },
+                        { id: 'node_2', x: 50, y: 80, content: 'Concept 1', type: 'idea', color: '#ec4899' },
+                        { id: 'node_3', x: 250, y: 80, content: 'Concept 2', type: 'idea', color: '#10b981' },
+                        { id: 'node_4', x: 50, y: 220, content: 'Implementation', type: 'task', color: '#f59e0b' },
+                        { id: 'node_5', x: 250, y: 220, content: 'Research', type: 'note', color: '#8b5cf6' }
+                    ];
+                    templateConnections = [
+                        { from: 'node_1', to: 'node_2' },
+                        { from: 'node_1', to: 'node_3' },
+                        { from: 'node_1', to: 'node_4' },
+                        { from: 'node_1', to: 'node_5' }
+                    ];
+                    break;
+                    
+                case 'project':
+                    templateNodes = [
+                        { id: 'node_1', x: 150, y: 80, content: 'Project Goal', type: 'goal', color: '#6366f1' },
+                        { id: 'node_2', x: 50, y: 150, content: 'Research', type: 'task', color: '#ec4899' },
+                        { id: 'node_3', x: 150, y: 150, content: 'Development', type: 'task', color: '#10b981' },
+                        { id: 'node_4', x: 250, y: 150, content: 'Testing', type: 'task', color: '#f59e0b' },
+                        { id: 'node_5', x: 150, y: 220, content: 'Launch', type: 'goal', color: '#8b5cf6' }
+                    ];
+                    templateConnections = [
+                        { from: 'node_1', to: 'node_2' },
+                        { from: 'node_1', to: 'node_3' },
+                        { from: 'node_1', to: 'node_4' },
+                        { from: 'node_2', to: 'node_5' },
+                        { from: 'node_3', to: 'node_5' },
+                        { from: 'node_4', to: 'node_5' }
+                    ];
+                    break;
+                    
+                default:
+                    // Default to brainstorm template
+                    templateNodes = [
+                        { id: 'node_1', x: 150, y: 150, content: 'Central Idea', type: 'idea', color: '#6366f1' },
+                        { id: 'node_2', x: 50, y: 80, content: 'Concept 1', type: 'idea', color: '#ec4899' },
+                        { id: 'node_3', x: 250, y: 80, content: 'Concept 2', type: 'idea', color: '#10b981' }
+                    ];
+                    templateConnections = [
+                        { from: 'node_1', to: 'node_2' },
+                        { from: 'node_1', to: 'node_3' }
+                    ];
+                    break;
+            }
+            
+            // Add template nodes
+            nodes = templateNodes;
+            connections = templateConnections;
+            
+            // Render nodes
+            nodes.forEach(node => renderNode(node));
+            updateConnections();
+            
+            // Select first node
+            if (nodes.length > 0) {
+                selectNode(nodes[0]);
+            }
+            
+            togglePanel(templatesPanel, false);
+            showToast(`"${templateName}" template loaded`, 'success');
+        }
+
+        // Save mind flow to Firestore
+        async function saveMindFlow() {
+            if (!currentUser) {
+                showToast('Please sign in to save', 'error');
+                return;
+            }
+            
+            try {
+                const mindFlowData = {
+                    nodes: nodes,
+                    connections: connections,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    canvasState: {
+                        offset: canvasOffset,
+                        scale: scale
+                    }
+                };
+                
+                await db.collection('mindFlows').doc(currentUser.uid).set(mindFlowData);
+                showToast('Mind Flow saved successfully', 'success');
+            } catch (error) {
+                console.error('Error saving mind flow:', error);
+                showToast('Error saving Mind Flow', 'error');
+            }
+        }
+
+        // Load mind flow from Firestore
+        async function loadMindFlow() {
+            if (!currentUser) {
+                showToast('Please sign in to load', 'error');
+                return;
+            }
+            
+            try {
+                const mindFlowDoc = await db.collection('mindFlows').doc(currentUser.uid).get();
+                
+                if (mindFlowDoc.exists) {
+                    const data = mindFlowDoc.data();
+                    nodes = data.nodes || [];
+                    connections = data.connections || [];
+                    
+                    // Load canvas state if available
+                    if (data.canvasState) {
+                        canvasOffset = data.canvasState.offset || { x: 0, y: 0 };
+                        scale = data.canvasState.scale || 1;
+                    }
+                    
+                    // Clear existing nodes
+                    nodesContainer.innerHTML = '';
+                    connectionsLayer.innerHTML = '<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(99, 102, 241, 0.6)" /></marker></defs>';
+                    
+                    // Render nodes
+                    nodes.forEach(node => renderNode(node));
+                    updateConnections();
+                    applyZoom();
+                    
+                    // Select first node if any exist
+                    if (nodes.length > 0) {
+                        selectNode(nodes[0]);
+                    }
+                    
+                    showToast('Mind Flow loaded successfully', 'success');
+                } else {
+                    showToast('No saved Mind Flow found', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading mind flow:', error);
+                showToast('Error loading Mind Flow', 'error');
+            }
+        }
+
+        // Canvas dragging for panning (desktop only)
+        function startDrag(e) {
+            if (e.target === nodesContainer) {
+                isDragging = true;
+                dragStart.x = e.clientX - canvasOffset.x;
+                dragStart.y = e.clientY - canvasOffset.y;
+                nodesContainer.style.cursor = 'grabbing';
+                e.preventDefault();
+            }
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            
+            canvasOffset.x = e.clientX - dragStart.x;
+            canvasOffset.y = e.clientY - dragStart.y;
+            
+            applyZoom();
+        }
+
+        function endDrag() {
+            isDragging = false;
+            nodesContainer.style.cursor = 'default';
+        }
+
+        function canvasClick(e) {
+            if (e.target === nodesContainer) {
+                // Deselect node when clicking on canvas
+                if (selectedNode) {
+                    const nodeElement = document.getElementById(selectedNode.id);
+                    if (nodeElement) nodeElement.classList.remove('selected');
+                    selectedNode = null;
+                }
+                
+                // Handle connection if in connecting mode
+                if (isConnecting && connectFromNode) {
+                    isConnecting = false;
+                    connectFromNode = null;
+                    connectBtn.classList.remove('active');
+                    showToast('Connection cancelled', 'error');
+                }
+            }
+        }
+
+        // Zoom functions
+        function zoomIn() {
+            if (scale < 2) {
+                scale += 0.1;
+                applyZoom();
+            }
+        }
+
+        function zoomOut() {
+            if (scale > 0.5) {
+                scale -= 0.1;
+                applyZoom();
+            }
+        }
+
+        function resetZoom() {
+            scale = 1;
+            canvasOffset.x = 0;
+            canvasOffset.y = 0;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            nodesContainer.style.transform = `translate(${canvasOffset.x}px, ${canvasOffset.y}px) scale(${scale})`;
+            connectionsLayer.style.transform = `translate(${canvasOffset.x}px, ${canvasOffset.y}px) scale(${scale})`;
+        }
+
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+
+        // Show toast notification
+        function showToast(message, type = '') {
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (type) toast.classList.add(type);
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Logout user
+        function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                auth.signOut().then(() => {
+                    showToast('Logged out successfully', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'indexz.html';
+                    }, 1000);
+                }).catch((error) => {
+                    console.error('Error signing out:', error);
+                    showToast('Error signing out', 'error');
+                });
+            }
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
+
+

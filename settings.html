@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Void | Settings</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to the official website of Void. Social Network for a World of Problem-Solvers." />
+    <meta name="author" content="Shoaib Ali" />
+<link rel="icon" type="image/png" href="images.png">
+    
+    
+    <meta property="og:title" content="Void" />
+    <meta property="og:description" content="Social Network for a World of Problem-Solvers." />
+    <meta property="og:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta property="og:url" content="https://www.projectvoid.in" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Void" />
+    
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Void" />
+    <meta name="twitter:description" content="Social Network for a World of Problem-Solvers." />
+    <meta name="twitter:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta name="twitter:site" content="@exploremiracles" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+            --success: #10b981;
+            --error: #ef4444;
+            --card-bg: #ffffff;
+            --sidebar-bg: #1f2937;
+            --content-bg: #f3f4f6;
+            --solved: #10b981;
+        }
+
+        body {
+           background: linear-gradient(120deg, #0A0A0A, #0D1B2A, #000000);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: wheat;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        
+        .sidebar {
+            width: 260px;
+            background: transparent;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        overflow-y: auto;   
+    overflow-x: hidden;
+    }
+    .sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: wheat;
+            margin-right: 0.75rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: wheat;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: rgba(245, 222, 179, 0.527);
+        }
+
+        .nav-item i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .nav-item span {
+            font-weight: 500;
+        }
+
+        .trending-tags {
+            margin-top: 2rem;
+        }
+
+        .trending-tags h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
+            color: var(--gray);
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+        }
+
+        .user-section {
+            margin-top: auto;
+            padding: 1rem 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #469c1e, #000000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(239, 68, 68, 0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn i {
+            margin-right: 0.5rem;
+        }
+
+        
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+       .page-title.minimal {
+    background: linear-gradient(135deg, rgb(247, 211, 146), rgb(252, 215, 146));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: 
+        minimalEntrance 1s ease-out forwards,
+        minimalShimmer 4s ease-in-out infinite;
+    padding: 0.25rem 0.5rem;
+}
+
+@keyframes minimalEntrance {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+        letter-spacing: 5px;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        letter-spacing: normal;
+    }
+}
+
+@keyframes minimalShimmer {
+    0%, 100% {
+        background-position: 0% center;
+        filter: brightness(1);
+    }
+    50% {
+        background-position: 100% center;
+        filter: brightness(1.2);
+    }
+}
+
+.page-title.minimal::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: wheat;
+    animation: minimalUnderline 1.2s ease-out 0.5s forwards;
+}
+
+@keyframes minimalUnderline {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+    100% {
+        width: 100%;
+        left: 0;
+    }
+}
+
+        
+        .settings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+      .settings-card {
+   background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 
+        0 6px 18px rgba(0, 0, 0, 0.08),
+        0 2px 6px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: transform 0.6s ease, box-shadow 0.6s ease, border 0.6s ease;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+}
+
+.settings-card:hover {
+    transform: translateY(-10px) rotate3d(1, 1, 0, 3deg);
+    box-shadow: 
+        0 16px 36px rgba(0, 0, 0, 0.15),
+        0 8px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.35); 
+}
+
+
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .settings-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: wheat;
+        }
+
+        .settings-content {
+            margin-top: 1rem;
+            color: white;
+        }
+      #deleteAccountBtn{
+        margin-top: 5px;
+      }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            color: black;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-control.success {
+            border-color: var(--success);
+        }
+
+        .form-control.error {
+            border-color: var(--error);
+        }
+
+        .form-feedback {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .form-feedback.success {
+            color: var(--success);
+        }
+
+        .form-feedback.error {
+            color: var(--error);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn i {
+            margin-right: 0.5rem;
+        }
+
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            background: var(--dark);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            margin-right: 10px;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+        .menu-toggle {
+            display: none;
+        }
+
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 1rem 0.5rem;
+            }
+
+            .logo h1,
+            .nav-item span,
+            .trending-tags,
+            .user-info span {
+                display: none;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .logo i {
+                margin-right: 0;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 0.75rem;
+            }
+
+            .nav-item i {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: 80px;
+            }
+            .logout-btn span{
+                display: none;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+                margin-left: 0;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                z-index: 1200;
+    background-color: #000000;
+            }
+             .logout-btn span{
+                display: none;
+
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .settings-container {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 1100;
+                color: wheat;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        
+        
+
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .settings-card {
+            animation: fadeIn 0.4s ease;
+        }
+
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+           background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: wheat;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-content {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: white;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fa-solid fa-cube"></i>
+    </div>
+
+    
+    <div class="toast" id="toast"></div>
+
+    
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete Account</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>Are you sure you want to delete your account? This action cannot be undone. All your data will be
+                    permanently removed from our systems.</p>
+                <p>To confirm, please type your password below:</p>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Enter your password">
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn" id="cancelDelete">Cancel</button>
+                <button class="btn btn-danger" id="confirmDelete">Delete Account</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-cube"></i>
+            <h1> Void</h1>
+        </div>
+
+        <a href="os.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+        <i class="fa-solid fa-cubes"></i>
+        <span>VoidOS</span>
+      </div>
+       </a>
+
+<a href="dashboard.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </div>
+</a>
+
+<a href="users.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+    </div>
+</a>
+
+<a href="chain.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-link"></i>
+        <span>Synaptic Chain</span>
+    </div>
+</a>
+
+<a href="profile.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>My Profile</span>
+    </div>
+</a>
+
+<a href="timeline.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Timeline</span>
+    </div>
+</a>
+
+<a href="status.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fa-solid fa-water"></i>
+        <span>Wave</span>
+    </div>
+</a>
+
+<a href="Saved.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fa-solid fa-dna"></i>
+        <span>Sequence</span>
+    </div>
+</a>
+
+<a href="personal.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-sticky-note"></i>
+        <span>My Personal Space</span>
+    </div>
+</a>
+
+<a href="articles.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-book-open"></i>
+        <span>Research Library</span>
+    </div>
+</a>
+
+         <a href="voidfeed.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+      <i class="fa-solid fa-rss"></i>
+        <span>VoidFeed</span>
+      </div>
+    </a>
+
+<a href="node.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-solid fa-cube"></i>
+        <span>Mind Lattice</span>
+    </div>
+</a>
+
+<hr style="margin: 0; border: 0; border-top: 1px solid #ccc;">
+
+<a href="time.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+    <div class="nav-item">
+        <i class="fas fa-clock" style="font-size: 14px;"></i>
+        <span>Time Insights</span>
+    </div>
+</a>
+
+<a href="feature.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+    <div class="nav-item">
+        <i class="fas fa-lightbulb" style="font-size: 14px;"></i>
+        <span>Feature Requests</span>
+    </div>
+</a>
+
+    <div class="nav-item active">
+        <i class="fas fa-cog" style="font-size: 14px;"></i>
+        <span>Settings</span>
+    </div>
+
+<a href="about.html" style="color: inherit; text-decoration: none;font-size: 14px;">
+    <div class="nav-item">
+        <i class="fa-solid fa-terminal" style="font-size: 14px;"></i>
+        <span>About</span>
+    </div>
+</a>
+
+<div class="user-section">
+    <div class="user-info">
+        <div class="user-avatar" id="user-avatar">SA</div>
+        <span id="sidebar-username">Loading...</span>
+    </div>
+    <button class="logout-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Log Out</span>
+    </button>
+</div>
+</div>
+
+    
+    <div class="main-content">
+        <div class="header">
+            <h2 class="page-title minimal">Account Settings</h2>
+        </div>
+
+        
+        <div class="settings-container">
+            
+            <div class="settings-card">
+                <div class="settings-header">
+                    <div class="settings-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <h3 class="settings-title">Change Username</h3>
+                </div>
+                <div class="settings-content">
+                    <div class="form-group">
+                        <label for="currentUsername">Current Username</label>
+                        <input type="text" id="currentUsername" class="form-control" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="newUsername">New Username</label>
+                        <input type="text" id="newUsername" class="form-control" placeholder="Enter new username">
+                        <div class="form-feedback" id="usernameFeedback"></div>
+                    </div>
+                    <button class="btn btn-primary" id="updateUsername" disabled>
+                        <i class="fas fa-save"></i> Update Username
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="settings-card">
+                <div class="settings-header">
+                    <div class="settings-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="settings-title">Change Password</h3>
+                </div>
+                <div class="settings-content">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" class="form-control"
+                            placeholder="Enter current password">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" class="form-control" placeholder="Enter new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Confirm New Password</label>
+                        <input type="password" id="confirmNewPassword" class="form-control"
+                            placeholder="Confirm new password">
+                    </div>
+                    <button class="btn btn-primary" id="updatePassword">
+                        <i class="fas fa-key"></i> Update Password
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="settings-card">
+                <div class="settings-header">
+                    <div class="settings-icon">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <h3 class="settings-title">Account Management</h3>
+                </div>
+                <div class="settings-content">
+                    <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
+                    <button class="btn btn-danger" id="deleteAccountBtn">
+                        <i class="fas fa-trash-alt"></i> Delete Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script>
+        // Firebase Configuration (replace with your actual config)
+        const firebaseConfig = {
+           apiKey: "AIzaSyAxQoFW6QiaazIcvkEPsYbnTv7zfKe8c-Y",
+            authDomain: "patternetweb.firebaseapp.com",
+            projectId: "patternetweb",
+            storageBucket: "patternetweb.firebasestorage.app",
+            messagingSenderId: "78400752693",
+            appId: "1:78400752693:web:540fbbcab615e6b078b57c"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Global variables
+        let currentUser = null;
+        let usernameCheckTimeout = null;
+
+        // DOM Elements
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const userAvatar = document.getElementById('user-avatar');
+        const sidebarUsername = document.getElementById('sidebar-username');
+        const toast = document.getElementById('toast');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const updateUsernameBtn = document.getElementById('updateUsername');
+        const updatePasswordBtn = document.getElementById('updatePassword');
+        const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+        const deleteModal = document.getElementById('deleteModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelDelete = document.getElementById('cancelDelete');
+        const confirmDelete = document.getElementById('confirmDelete');
+        const currentUsernameInput = document.getElementById('currentUsername');
+        const newUsernameInput = document.getElementById('newUsername');
+        const usernameFeedback = document.getElementById('usernameFeedback');
+
+        // Initialize the application
+        function initApp() {
+            // Check authentication state
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    console.log('User signed in:', user.uid);
+
+                    // Get user data from Firestore
+                    try {
+                        const userDoc = await db.collection('users').doc(user.uid).get();
+                        if (userDoc.exists) {
+                            const userData = userDoc.data();
+                            displayUserInfo(userData);
+                        } else {
+                            showToast('User data not found. Please log in again.', 'error');
+                            setTimeout(() => {
+                                window.location.href = 'indexz.html';
+                            }, 2000);
+                        }
+                    } catch (error) {
+                        console.error('Error getting user document:', error);
+                        showToast('Error loading user data', 'error');
+                    }
+                } else {
+                    // No user is signed in, redirect to login
+                    window.location.href = 'indexz.html';
+                }
+            });
+
+            // Set up event listeners
+            menuToggle.addEventListener('click', toggleSidebar);
+            logoutBtn.addEventListener('click', logout);
+            updateUsernameBtn.addEventListener('click', updateUsername);
+            updatePasswordBtn.addEventListener('click', updatePassword);
+            deleteAccountBtn.addEventListener('click', () => {
+                deleteModal.style.display = 'flex';
+            });
+            closeModal.addEventListener('click', () => {
+                deleteModal.style.display = 'none';
+            });
+            cancelDelete.addEventListener('click', () => {
+                deleteModal.style.display = 'none';
+            });
+            confirmDelete.addEventListener('click', deleteAccount);
+
+            // Username validation
+            newUsernameInput.addEventListener('input', debounce(checkUsernameAvailability, 500));
+        }
+
+        // Debounce function to limit API calls
+        function debounce(func, delay) {
+            return function () {
+                const context = this;
+                const args = arguments;
+                clearTimeout(usernameCheckTimeout);
+                usernameCheckTimeout = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
+        // Check if username is available
+        async function checkUsernameAvailability() {
+            const newUsername = newUsernameInput.value.trim();
+
+            // Reset feedback
+            usernameFeedback.textContent = '';
+            usernameFeedback.className = 'form-feedback';
+            newUsernameInput.classList.remove('success', 'error');
+            updateUsernameBtn.disabled = true;
+
+            // Validate username
+            if (newUsername.length < 3) {
+                usernameFeedback.textContent = 'Username must be at least 3 characters';
+                usernameFeedback.classList.add('error');
+                newUsernameInput.classList.add('error');
+                return;
+            }
+
+            if (newUsername.length > 20) {
+                usernameFeedback.textContent = 'Username must be less than 20 characters';
+                usernameFeedback.classList.add('error');
+                newUsernameInput.classList.add('error');
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9_]+$/.test(newUsername)) {
+                usernameFeedback.textContent = 'Username can only contain letters, numbers, and underscores';
+                usernameFeedback.classList.add('error');
+                newUsernameInput.classList.add('error');
+                return;
+            }
+
+            // Check if username is the same as current
+            if (newUsername === currentUsernameInput.value) {
+                usernameFeedback.textContent = 'This is your current username';
+                usernameFeedback.classList.add('error');
+                newUsernameInput.classList.add('error');
+                return;
+            }
+
+            // Check if username is available
+            try {
+                const snapshot = await db.collection('users')
+                    .where('username', '==', newUsername)
+                    .get();
+
+                if (snapshot.empty) {
+                    usernameFeedback.innerHTML = '<i class="fas fa-check-circle"></i> Username is available';
+                    usernameFeedback.classList.add('success');
+                    newUsernameInput.classList.add('success');
+                    updateUsernameBtn.disabled = false;
+                } else {
+                    usernameFeedback.innerHTML = '<i class="fas fa-times-circle"></i> Username is already taken';
+                    usernameFeedback.classList.add('error');
+                    newUsernameInput.classList.add('error');
+                }
+            } catch (error) {
+                console.error('Error checking username:', error);
+                usernameFeedback.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error checking username availability';
+                usernameFeedback.classList.add('error');
+                newUsernameInput.classList.add('error');
+            }
+        }
+
+        // Display user information in the sidebar
+        function displayUserInfo(userData) {
+            const username = userData.username || 'User';
+            userAvatar.textContent = username.charAt(0).toUpperCase();
+            sidebarUsername.textContent = username;
+            currentUsernameInput.value = username;
+        }
+
+        // Update username
+        async function updateUsername() {
+            const newUsername = newUsernameInput.value.trim();
+
+            if (!newUsername) {
+                showToast('Please enter a username', 'error');
+                return;
+            }
+
+            try {
+                // Update username in Firestore
+                await db.collection('users').doc(currentUser.uid).update({
+                    username: newUsername,
+                    updatedAt: new Date().toISOString()
+                });
+
+                // Update UI
+                userAvatar.textContent = newUsername.charAt(0).toUpperCase();
+                sidebarUsername.textContent = newUsername;
+                currentUsernameInput.value = newUsername;
+
+                // Reset form
+                newUsernameInput.value = '';
+                usernameFeedback.textContent = '';
+                usernameFeedback.className = 'form-feedback';
+                newUsernameInput.classList.remove('success', 'error');
+                updateUsernameBtn.disabled = true;
+
+                showToast('Username updated successfully!', 'success');
+            } catch (error) {
+                console.error('Error updating username:', error);
+                showToast('Error updating username', 'error');
+            }
+        }
+
+        // Update user password
+        async function updatePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            // Validate inputs
+            if (!currentPassword || !newPassword || !confirmNewPassword) {
+                showToast('Please fill in all password fields', 'error');
+                return;
+            }
+
+            if (newPassword !== confirmNewPassword) {
+                showToast('New passwords do not match', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showToast('Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            try {
+                // Reauthenticate user
+                const credential = firebase.auth.EmailAuthProvider.credential(
+                    currentUser.email,
+                    currentPassword
+                );
+
+                await currentUser.reauthenticateWithCredential(credential);
+
+                // Update password
+                await currentUser.updatePassword(newPassword);
+
+                // Clear form
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmNewPassword').value = '';
+
+                showToast('Password updated successfully!', 'success');
+            } catch (error) {
+                console.error('Error updating password:', error);
+
+                if (error.code === 'auth/wrong-password') {
+                    showToast('Current password is incorrect', 'error');
+                } else {
+                    showToast('Error updating password', 'error');
+                }
+            }
+        }
+
+        // Delete user account
+        async function deleteAccount() {
+            const password = document.getElementById('confirmPassword').value;
+
+            if (!password) {
+                showToast('Please enter your password to confirm', 'error');
+                return;
+            }
+
+            try {
+                // Reauthenticate user
+                const credential = firebase.auth.EmailAuthProvider.credential(
+                    currentUser.email,
+                    password
+                );
+
+                await currentUser.reauthenticateWithCredential(credential);
+
+                // Delete user data from Firestore
+                await db.collection('users').doc(currentUser.uid).delete();
+
+                // Delete user account
+                await currentUser.delete();
+
+                showToast('Account deleted successfully', 'success');
+
+                // Redirect to login page after a short delay
+                setTimeout(() => {
+                    window.location.href = 'indexz.html';
+                }, 2000);
+
+            } catch (error) {
+                console.error('Error deleting account:', error);
+
+                if (error.code === 'auth/wrong-password') {
+                    showToast('Password is incorrect', 'error');
+                } else {
+                    showToast('Error deleting account', 'error');
+                }
+            }
+        }
+
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+
+        // Show toast notification
+        function showToast(message, type = '') {
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (type) toast.classList.add(type);
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Logout user
+        function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                auth.signOut()
+                    .then(() => {
+                        window.location.href = 'indexz.html';
+                    })
+                    .catch(error => {
+                        console.error('Error signing out:', error);
+                        showToast('Error signing out', 'error');
+                    });
+            }
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+
+</html>
+
+

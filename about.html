@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>About Us | Void</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to the official website of Void. Social Network for a World of Problem-Solvers." />
+    <meta name="author" content="Shoaib Ali" />
+    <link rel="icon" type="image/png" href="images.png">
+    
+    
+    <meta property="og:title" content="Void" />
+    <meta property="og:description" content="Social Network for a World of Problem-Solvers." />
+    <meta property="og:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta property="og:url" content="https://www.projectvoid.in" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Void" />
+    
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Void" />
+    <meta name="twitter:description" content="Social Network for a World of Problem-Solvers." />
+    <meta name="twitter:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta name="twitter:site" content="@exploremiracles" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+            --success: #10b981;
+            --error: #ef4444;
+            --card-bg: #ffffff;
+            --sidebar-bg: #1f2937;
+            --content-bg: #f3f4f6;
+            --solved: #10b981;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        
+        .sidebar {
+            width: 260px;
+            background: #111;
+            color: #ffffff;
+            height: 100vh;
+            position: fixed;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 100;
+            border-right: 1px solid #333;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-right: 0.75rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo small {
+            font-size: 0.7rem;
+            margin-left: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #ffffff;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left: 3px solid #ffffff;
+        }
+
+        .nav-item i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+            color: #ffffff;
+        }
+
+        .nav-item span {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .user-section {
+            margin-top: auto;
+            padding: 1rem 0.5rem;
+            border-top: 1px solid #333;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            background: #000;
+            border: 1px solid #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ffffff;
+            border: 1px solid #ff0000;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn i {
+            margin-right: 0.5rem;
+        }
+
+        
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            position: relative;
+        }
+
+        
+        .terminal-header {
+            background: #111;
+            padding: 1rem;
+            border: 1px solid #333;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .terminal-title {
+            font-size: 1.8rem;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .terminal-subtitle {
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .terminal-prompt {
+            color: #b3b3b3;
+            font-weight: bold;
+        }
+
+        .blinking-cursor {
+            animation: blink 1s infinite;
+            color: #bbbbbb;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        
+        .terminal-content {
+            flex: 1;
+            background: #000;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            position: relative;
+          overflow-y: auto;
+            overflow-x: hidden;
+    }
+
+    .terminal-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .terminal-content::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+    }
+
+    .terminal-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+        .terminal-line {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .command-prompt {
+            color: #b3b3b3;
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        .command {
+            color: #ffffff;
+        }
+
+        .output {
+            color: #b3b3b3;
+            margin-left: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .developer-list {
+            margin-top: 1rem;
+            margin-left: 2rem;
+        }
+
+        .developer-item {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+            opacity: 0;
+            animation: typewriter 0.5s forwards;
+        }
+
+        .developer-item:before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: #b3b3b3;
+        }
+
+        @keyframes typewriter {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .system-info {
+            margin-top: 2rem;
+            border-top: 1px dashed #333;
+            padding-top: 1rem;
+        }
+
+        .system-line {
+            margin-bottom: 0.3rem;
+        }
+.menu-toggle {
+            display: none;
+}
+        
+
+        
+        
+
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 1rem 0.5rem;
+            }
+
+            .logo h1,
+            .nav-item span,
+            .user-info span {
+                display: none;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .logo i {
+                margin-right: 0;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 0.75rem;
+            }
+
+            .nav-item i {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: 80px;
+            }
+            .logout-btn span{
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+                margin-left: 0;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                background-color: #000;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                    z-index: 1200;
+            }
+            .logout-btn span{
+                display: none;
+            }
+            .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1100;
+            background: #ffffff;
+            color: #000;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #ffffff;
+        }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .terminal-content {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                    transparent 50%,
+                    rgba(0, 0, 0, 0.1) 51%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(42px, 9999px, 44px, 0);
+            }
+
+            5% {
+                clip: rect(12px, 9999px, 59px, 0);
+            }
+
+            10% {
+                clip: rect(48px, 9999px, 29px, 0);
+            }
+
+            15% {
+                clip: rect(42px, 9999px, 73px, 0);
+            }
+
+            20% {
+                clip: rect(63px, 9999px, 27px, 0);
+            }
+
+            25% {
+                clip: rect(34px, 9999px, 55px, 0);
+            }
+
+            30% {
+                clip: rect(86px, 9999px, 73px, 0);
+            }
+
+            35% {
+                clip: rect(20px, 9999px, 20px, 0);
+            }
+
+            40% {
+                clip: rect(26px, 9999px, 60px, 0);
+            }
+
+            45% {
+                clip: rect(25px, 9999px, 66px, 0);
+            }
+
+            50% {
+                clip: rect(57px, 9999px, 98px, 0);
+            }
+
+            55% {
+                clip: rect(5px, 9999px, 46px, 0);
+            }
+
+            60% {
+                clip: rect(82px, 9999px, 31px, 0);
+            }
+
+            65% {
+                clip: rect(54px, 9999px, 27px, 0);
+            }
+
+            70% {
+                clip: rect(28px, 9999px, 99px, 0);
+            }
+
+            75% {
+                clip: rect(45px, 9999px, 69px, 0);
+            }
+
+            80% {
+                clip: rect(23px, 9999px, 85px, 0);
+            }
+
+            85% {
+                clip: rect(54px, 9999px, 84px, 0);
+            }
+
+            90% {
+                clip: rect(45px, 9999px, 47px, 0);
+            }
+
+            95% {
+                clip: rect(37px, 9999px, 20px, 0);
+            }
+
+            100% {
+                clip: rect(73px, 9999px, 99px, 0);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(65px, 9999px, 100px, 0);
+            }
+
+            5% {
+                clip: rect(52px, 9999px, 74px, 0);
+            }
+
+            10% {
+                clip: rect(79px, 9999px, 85px, 0);
+            }
+
+            15% {
+                clip: rect(75px, 9999px, 5px, 0);
+            }
+
+            20% {
+                clip: rect(67px, 9999px, 61px, 0);
+            }
+
+            25% {
+                clip: rect(14px, 9999px, 79px, 0);
+            }
+
+            30% {
+                clip: rect(1px, 9999px, 66px, 0);
+            }
+
+            35% {
+                clip: rect(86px, 9999px, 30px, 0);
+            }
+
+            40% {
+                clip: rect(23px, 9999px, 98px, 0);
+            }
+
+            45% {
+                clip: rect(85px, 9999px, 72px, 0);
+            }
+
+            50% {
+                clip: rect(71px, 9999px, 75px, 0);
+            }
+
+            55% {
+                clip: rect(2px, 9999px, 48px, 0);
+            }
+
+            60% {
+                clip: rect(30px, 9999px, 16px, 0);
+            }
+
+            65% {
+                clip: rect(59px, 9999px, 50px, 0);
+            }
+
+            70% {
+                clip: rect(41px, 9999px, 62px, 0);
+            }
+
+            75% {
+                clip: rect(2px, 9999px, 82px, 0);
+            }
+
+            80% {
+                clip: rect(47px, 9999px, 73px, 0);
+            }
+
+            85% {
+                clip: rect(3px, 9999px, 27px, 0);
+            }
+
+            90% {
+                clip: rect(26px, 9999px, 55px, 0);
+            }
+
+            95% {
+                clip: rect(42px, 9999px, 97px, 0);
+            }
+
+            100% {
+                clip: rect(38px, 9999px, 49px, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fa-solid fa-cube"></i>
+    </div>
+
+    
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-cube"></i>
+            <h1>Void</h1>
+        </div>
+
+        <a href="os.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+        <i class="fa-solid fa-cubes"></i>
+        <span>VoidOS</span>
+      </div>
+       </a>
+
+<a href="dashboard.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        </a>
+
+<a href="users.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </div>
+        </a>
+
+        <a href="chain.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-link"></i>
+            <span>Synaptic Chain</span>
+        </div>
+        </a>
+
+        <a href="profile.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>My Profile</span>
+        </div>
+        </a>
+
+<a href="timeline.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Timeline</span>
+        </div>
+        </a>
+
+<a href="status.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fa-solid fa-water"></i>
+            <span>Wave</span>
+        </div>
+        </a>
+
+<a href="saved.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-dna"></i>
+            <span>Sequence</span>
+        </div>
+        </a>
+
+        <a href="personal.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-sticky-note"></i>
+            <span>My Personal Space</span>
+        </div>
+        </a>
+        
+        <a href="articles.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-book-open"></i>
+            <span>Research Library</span>
+        </div>
+        </a>
+
+         <a href="voidfeed.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+      <i class="fa-solid fa-rss"></i>
+        <span>VoidFeed</span>
+      </div>
+    </a>
+
+        <a href="node.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-solid fa-cube"></i>
+            <span>Mind Lattice</span>
+        </div>
+        </a>
+
+        <hr style="margin: 0; border: 0; border-top: 1px solid #333;">
+
+    <a href="time.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+        <div class="nav-item">
+            <i class="fas fa-clock" style="font-size: 14px;"></i>
+            <span>Time Insights</span>
+        </div>
+    </a>
+
+
+    <a href="feature.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+        <div class="nav-item">
+            <i class="fas fa-lightbulb" style="font-size: 14px;"></i>
+            <span>Feature Requests</span>
+        </div>
+    </a>
+
+        <a href="settings.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+            <div class="nav-item">
+                <i class="fas fa-cog" style="font-size: 14px;"></i>
+                <span>Settings</span>
+            </div>
+        </a>
+
+        <div class="nav-item active" style="color: inherit; text-decoration: none; font-size: 14px;">
+            <i class="fa-solid fa-terminal" style="font-size: 14px;"></i>
+            <span>About</span>
+        </div>
+
+        <div class="user-section">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">SA</div>
+                <span id="sidebar-username">Loading...</span>
+            </div>
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+    
+    <div class="main-content">
+        <div class="terminal-header">
+            <h1 class="terminal-title glitch" data-text="ABOUT US">ABOUT US</h1>
+            <div class="terminal-subtitle">VOID, a project by EM</div>
+            <div class="terminal-line">
+                <span class="terminal-prompt">user@void:~$</span>
+                <span class="command">cat about.txt</span>
+                <span class="blinking-cursor">_</span>
+            </div>
+        </div>
+
+        <div class="terminal-content">
+            <div class="scanlines"></div>
+
+            <div class="terminal-line">
+                <span class="command-prompt">void></span>
+                <span class="command">system_info --em</span>
+            </div>
+            <div class="output">
+                EXPLORE MIRACLES<br>
+                FOUNDED: 2017<br>
+                "Explore the Unknown"<br>
+                STATUS: ACTIVE
+            </div>
+
+            <div class="terminal-line">
+                <span class="command-prompt">void></span>
+                <span class="command">developer_list --all</span>
+            </div>
+            <div class="developer-list" id="developerList">
+                
+            </div>
+
+            <div class="terminal-line">
+                <span class="command-prompt">void></span>
+                <span class="command">system_status</span>
+            </div>
+            <div class="system-info">
+                <div class="system-line">SYSTEM STATUS: OPERATIONAL</div>
+                <div class="system-line">LAST UPDATE: <span id="currentDate"></span></div>
+                <div class="system-line">USER COUNT: <span id="userCount">LOADING...</span></div>
+                <div class="system-line">PROJECTS ACTIVE: 4</div>
+            </div>
+
+            <div class="terminal-line">
+                <span class="command-prompt">void></span>
+                <span class="command">mission_statement</span>
+            </div>
+            <div class="output">
+                "Exploring the unknown, solving complexity, and transforming ideas into impactful realities."
+            </div>
+
+            <div class="terminal-line">
+                <span class="command-prompt">void></span>
+                <span class="command">_</span><span class="blinking-cursor">_</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxQoFW6QiaazIcvkEPsYbnTv7zfKe8c-Y",
+            authDomain: "patternetweb.firebaseapp.com",
+            projectId: "patternetweb",
+            storageBucket: "patternetweb.firebasestorage.app",
+            messagingSenderId: "78400752693",
+            appId: "1:78400752693:web:540fbbcab615e6b078b57c"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Global variables
+        let currentUser = null;
+
+        // DOM Elements
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userAvatar = document.getElementById('user-avatar');
+        const sidebarUsername = document.getElementById('sidebar-username');
+        const developerList = document.getElementById('developerList');
+        const currentDate = document.getElementById('currentDate');
+        const userCount = document.getElementById('userCount');
+
+        // Initialize the application
+        function initApp() {
+            console.log('Initializing About Us page...');
+            
+            // Set current date
+            currentDate.textContent = new Date().toLocaleDateString();
+            
+            // Check authentication state
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    console.log('User signed in:', user.uid);
+
+                    // Get user data from Firestore
+                    try {
+                        const userDoc = await db.collection('users').doc(user.uid).get();
+                        if (userDoc.exists) {
+                            const userData = userDoc.data();
+                            displayUserInfo(userData);
+                            setupEventListeners();
+                            loadDeveloperList();
+                            loadUserCount();
+                        } else {
+                            // Create a default user data if not exists
+                            const defaultUserData = {
+                                username: user.email.split('@')[0] || 'User',
+                                createdAt: new Date()
+                            };
+                            await db.collection('users').doc(user.uid).set(defaultUserData);
+                            displayUserInfo(defaultUserData);
+                            setupEventListeners();
+                            loadDeveloperList();
+                        }
+                    } catch (error) {
+                        console.error('Error getting user document:', error);
+                        // Use default data if Firestore fails
+                        displayUserInfo({ username: 'User' });
+                        setupEventListeners();
+                        loadDeveloperList();
+                    }
+                } else {
+                    // No user is signed in, redirect to login
+                    console.log('No user signed in, redirecting...');
+                    window.location.href = 'indexz.html';
+                }
+            });
+        }
+
+        // Display user information in the sidebar
+        function displayUserInfo(userData) {
+            const username = userData.username || 'User';
+            userAvatar.textContent = username.charAt(0).toUpperCase();
+            sidebarUsername.textContent = username;
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', toggleSidebar);
+            
+            // Logout button
+            logoutBtn.addEventListener('click', logout);
+        }
+
+        // Load and display developer list with animation
+        function loadDeveloperList() {
+            const developers = [
+                "Sabahat Sakinah...",
+                "Uzair Hassan...",
+                "Shoaib Ali..."
+            ];
+            
+            developers.forEach((dev, index) => {
+                setTimeout(() => {
+                    const devElement = document.createElement('div');
+                    devElement.className = 'developer-item';
+                    devElement.textContent = dev;
+                    developerList.appendChild(devElement);
+                }, index * 300); // Stagger the animations
+            });
+        }
+
+        // Load user count from Firestore
+        async function loadUserCount() {
+            try {
+                const usersSnapshot = await db.collection('users').get();
+                userCount.textContent = usersSnapshot.size;
+            } catch (error) {
+                console.error('Error loading user count:', error);
+                userCount.textContent = 'ERROR';
+            }
+        }
+
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+
+        // Logout user
+        function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                auth.signOut().then(() => {
+                    window.location.href = 'indexz.html';
+                }).catch((error) => {
+                    console.error('Error signing out:', error);
+                });
+            }
+        }
+
+        // Add terminal typing effect
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Void | My Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to the official website of Void. Social Network for a World of Problem-Solvers." />
+    <meta name="author" content="Shoaib Ali" />
+    <link rel="icon" type="image/png" href="images.png">
+    
+    
+    <meta property="og:title" content="Void" />
+    <meta property="og:description" content="Social Network for a World of Problem-Solvers." />
+    <meta property="og:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta property="og:url" content="https://www.projectvoid.in" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Void" />
+    
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Void" />
+    <meta name="twitter:description" content="Social Network for a World of Problem-Solvers." />
+    <meta name="twitter:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta name="twitter:site" content="@exploremiracles" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+            --success: #10b981;
+            --error: #ef4444;
+            --card-bg: #ffffff;
+            --sidebar-bg: #1f2937;
+            --content-bg: #f3f4f6;
+            --solved: #10b981;
+        }
+
+        body {
+             background: linear-gradient(120deg, #0A0A0A, #0D1B2A, #000000);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: wheat;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        
+        .sidebar {
+            width: 260px;
+            background: transparent;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+         overflow-y: auto;   
+    overflow-x: hidden;
+    }
+    .sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: wheat;
+            margin-right: 0.75rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: wheat;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: rgba(245, 222, 179, 0.527);
+        }
+
+        .nav-item i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .nav-item span {
+            font-weight: 500;
+        }
+
+        .trending-tags {
+            margin-top: 2rem;
+        }
+
+        .trending-tags h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
+            color: var(--gray);
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+        }
+
+        .user-section {
+            margin-top: auto;
+            padding: 1rem 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+           background:linear-gradient(45deg, #469c1e, #000000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(239, 68, 68, 0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn i {
+            margin-right: 0.5rem;
+        }
+
+        
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-bar i {
+            color: var(--gray);
+            margin-right: 0.5rem;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .page-title.minimal {
+    background: linear-gradient(135deg, rgb(247, 211, 146), rgb(252, 215, 146));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: 
+        minimalEntrance 1s ease-out forwards,
+        minimalShimmer 4s ease-in-out infinite;
+    padding: 0.25rem 0.5rem;
+}
+
+@keyframes minimalEntrance {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+        letter-spacing: 5px;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        letter-spacing: normal;
+    }
+}
+
+@keyframes minimalShimmer {
+    0%, 100% {
+        background-position: 0% center;
+        filter: brightness(1);
+    }
+    50% {
+        background-position: 100% center;
+        filter: brightness(1.2);
+    }
+}
+
+.page-title.minimal::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: wheat;
+    animation: minimalUnderline 1.2s ease-out 0.5s forwards;
+}
+
+@keyframes minimalUnderline {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+    100% {
+        width: 100%;
+        left: 0;
+    }
+}
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+           background: #403B4A;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #cdcebe, #403B4A);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #cdcebe, #403B4A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .avatar-wrapper2 {
+      position: relative;
+      display: inline-block;
+    }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 20%;
+            background:linear-gradient(45deg, #469c1e, #000000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            color: white;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .verified-badge2 {
+      position: absolute;
+      top: -4px;
+      right: 16px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 0.2px solid white;
+      background-color: #AB2330;
+    }
+
+
+        .profile-info h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: rgb(255, 255, 255);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: black;
+        }
+
+        
+        .problem-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+         .problem-card {
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 10px rgba(0, 0, 0, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.problem-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    0 12px 40px rgba(0, 0, 0, 0.25),
+    0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+        .problem-card.solved {
+            border-left: 4px solid var(--solved);
+        }
+
+        .problem-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .avatar-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+        .problem-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background:linear-gradient(45deg, #469c1e, #000000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .verified-badge {
+      position: absolute;
+      top: -4px;
+      right: 8px;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 0.2px solid white;
+      background-color: #AB2330;
+    }
+
+        .problem-user {
+            font-weight: 600;
+            color: wheat;
+        }
+
+        .problem-time {
+            color: white;
+            font-size: 0.85rem;
+            margin-left: auto;
+        }
+
+        .problem-content {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: white;
+        }
+
+        .problem-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+        }
+
+        .problem-tag {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .problem-tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .problem-actions {
+            display: flex;
+            gap: 1rem;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .action-btn:hover {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .action-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .action-btn.liked {
+            color: var(--error);
+        }
+
+        .action-btn.upvoted {
+            color: var(--success);
+        }
+
+        .action-btn.solved {
+            color: var(--solved);
+        }
+
+        .action-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .solved-badge {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 1.5rem;
+            background: var(--solved);
+            color: white;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        
+        .answers {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .answer-form {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .answer-input {
+            flex: 1;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            min-height: 50px;
+             resize: none;
+      overflow: hidden;
+      box-sizing: border-box;
+            
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .answer-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .answer-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .answer-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .answer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-user {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .answer-time {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .answer-content {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .menu-toggle {
+            display: none;
+        }
+
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 1rem 0.5rem;
+            }
+
+            .logo h1,
+            .nav-item span,
+            .trending-tags,
+            .user-info span {
+                display: none;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .logo i {
+                margin-right: 0;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 0.75rem;
+            }
+
+            .nav-item i {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: 80px;
+            }
+            .logout-btn span{
+                display: none;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+                margin-left: 0;
+            }
+
+             .sidebar {
+    width: 260px; 
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+    z-index: 1200;
+    background-color: #000000;
+  }
+
+  .sidebar.active .trending-tags {
+    display: block; 
+  }
+  .user-info span {
+    display: inline;
+  }
+
+  
+  .nav-item {
+    justify-content: flex-start; 
+    padding: 0.75rem 1rem; 
+  }
+
+  
+  .nav-item span {
+    display: inline; 
+    margin-left: 0.75rem; 
+  }
+
+  
+  .menu-toggle {
+    display: flex;
+  }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+           padding: 0.75rem 1rem;
+            }
+
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            .verified-badge2 {
+      position: absolute;
+      top: -4px;
+      right: 2px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 0.2px solid white;
+      background-color: #AB2330;
+    }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 1100;
+               color: wheat;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .solved-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 0.5rem;
+                align-self: flex-start;
+            }
+        }
+
+        
+        
+
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .problem-card {
+            animation: fadeIn 0.4s ease;
+        }
+
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            background: var(--dark);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            margin-right: 10px;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .empty-state p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .browse-btn {
+            background: rgb(230, 174, 71);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .browse-btn:hover {
+            background: rgb(248, 177, 44);
+            transform: translateY(-2px);
+        }
+           #scrollTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  color: wheat;
+  border: none;
+  padding: 12px;
+  border-radius: 20%;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+  /* Transparent blurred background */
+  background-color: rgba(255, 255, 255, 0.1); /* slight tint so blur is visible */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+    #scrollTopBtn:hover {
+      background-color: rgb(243, 188, 85);
+    }
+    </style>
+</head>
+
+<body>
+    
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fa-solid fa-cube"></i>
+    </div>
+
+    
+    <div class="toast" id="toast"></div>
+
+    
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-cube"></i>
+            <h1> Void</h1>
+        </div>
+
+        <a href="os.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+        <i class="fa-solid fa-cubes"></i>
+        <span>VoidOS</span>
+      </div>
+       </a>
+
+        <a href="dashboard.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        </a>
+
+        <a href="users.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </div>
+        </a>
+
+        <a href="chain.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-link"></i>
+            <span>Synaptic Chain</span>
+        </div>
+        </a>
+
+        <div class="nav-item active">
+            <i class="fas fa-user"></i>
+            <span>My Profile</span>
+        </div>
+
+
+        <a href="timeline.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Timeline</span>
+        </div>
+        </a>
+
+<a href="status.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fa-solid fa-water"></i>
+            <span>Wave</span>
+        </div>
+        </a>
+
+<a href="Saved.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fa-solid fa-dna"></i>
+            <span>Sequence</span>
+        </div>
+        </a>
+
+<a href="personal.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-sticky-note"></i>
+        <span>My Personal Space</span>
+    </div>
+    </a>
+
+<a href="articles.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-book-open"></i>
+        <span>Research Library</span>
+    </div>
+    </a>
+
+         <a href="voidfeed.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+      <i class="fa-solid fa-rss"></i>
+        <span>VoidFeed</span>
+      </div>
+    </a>
+
+    <a href="node.html" style="color: inherit; text-decoration: none;">
+        <div class="nav-item">
+            <i class="fas fa-solid fa-cube"></i>
+            <span>Mind Lattice</span>
+        </div>
+    </a>
+
+        <hr style="margin: 0; border: 0; border-top: 1px solid #ccc;">
+
+        <a href="time.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+        <div class="nav-item">
+            <i class="fas fa-clock" style="font-size: 14px;"></i>
+            <span>Time Insights</span>
+        </div>
+        </a>
+
+        <a href="feature.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+        <div class="nav-item">
+            <i class="fas fa-lightbulb" style="font-size: 14px;"></i>
+            <span>Feature Requests</span>
+        </div>
+        </a>
+        
+<a href="settings.html" style="color: inherit; text-decoration: none;font-size: 14px;">
+        <div class="nav-item">
+            <i class="fas fa-cog" style="font-size: 14px;"></i>
+            <span>Settings</span>
+        </div>
+        </a>
+
+        <a href="about.html" style="color: inherit; text-decoration: none;font-size: 14px;">
+            <div class="nav-item">
+                <i class="fa-solid fa-terminal" style="font-size: 14px;"></i>
+                <span>About</span>
+            </div>
+        </a>
+
+        <div class="trending-tags">
+            <h3>Trending Tags</h3>
+            <div id="trending-tags-container">
+                <div class="tag">#loading...</div>
+            </div>
+        </div>
+
+        <div class="user-section">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">SA</div>
+                <span id="sidebar-username">Loading...</span>
+            </div>
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+    
+    <div class="main-content">
+        <div class="header">
+            <h2 class="page-title minimal">My Profile</h2>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search my problems...">
+            </div>
+        </div>
+
+        
+        <div class="profile-header">
+            <div class="avatar-wrapper2">
+            <div class="profile-avatar" id="profile-avatar">SA</div>
+            <span class="verified-badge2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="white">
+                    <circle cx="12" cy="12" r="12" fill="#AB2330"></circle>
+                    <path d="M10.2 15.3l-3-3 1.4-1.4 1.6 1.6 4.6-4.6 1.4 1.4-6 6z" fill="white"></path>
+                </svg>
+            </span>
+            </div>
+            <div class="profile-info">
+                <h2 id="profile-username">Loading...</h2>
+                <p>Member since <span id="member-since">Loading...</span></p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="problems-count">0</div>
+                        <div class="stat-label">Problems</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="solved-count">0</div>
+                        <div class="stat-label">Solved</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="answers-count">0</div>
+                        <div class="stat-label">Answers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="spinner" id="loadingSpinner"></div>
+
+        
+        <div class="problem-feed" id="problemFeed">
+            
+        </div>
+    </div>
+
+    <button id="scrollTopBtn" onclick="scrollToTop()">
+        <i class="fa-solid fa-turn-up"></i>
+    </button>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script>
+        
+        // Firebase Configuration (replace with your actual config)
+        const firebaseConfig = {
+             apiKey: "AIzaSyAxQoFW6QiaazIcvkEPsYbnTv7zfKe8c-Y",
+            authDomain: "patternetweb.firebaseapp.com",
+            projectId: "patternetweb",
+            storageBucket: "patternetweb.firebasestorage.app",
+            messagingSenderId: "78400752693",
+            appId: "1:78400752693:web:540fbbcab615e6b078b57c"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Global variables
+        let currentUser = null;
+        let userProblems = [];
+        let problemsListener = null;
+        let userVotes = {}; // Track user votes for each problem
+        let trendingTags = []; // Store trending tags
+        let userStats = {
+            problems: 0,
+            solved: 0,
+            answers: 0
+        };
+
+        // DOM Elements
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const searchInput = document.getElementById('searchInput');
+        const problemFeed = document.getElementById('problemFeed');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userAvatar = document.getElementById('user-avatar');
+        const sidebarUsername = document.getElementById('sidebar-username');
+        const profileAvatar = document.getElementById('profile-avatar');
+        const profileUsername = document.getElementById('profile-username');
+        const memberSince = document.getElementById('member-since');
+        const problemsCount = document.getElementById('problems-count');
+        const solvedCount = document.getElementById('solved-count');
+        const answersCount = document.getElementById('answers-count');
+        const toast = document.getElementById('toast');
+        const trendingTagsContainer = document.getElementById('trending-tags-container');
+
+        // Initialize the application
+        function initApp() {
+            // Check authentication state
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    console.log('User signed in:', user.uid);
+
+                    // Get user data from Firestore
+                    try {
+                        const userDoc = await db.collection('users').doc(user.uid).get();
+                        if (userDoc.exists) {
+                            const userData = userDoc.data();
+                            displayUserInfo(userData);
+                            loadUserVotes(); // Load user's votes before loading problems
+                            loadUserProblems(); // Load user's problems
+                            loadTrendingTags(); // Load trending tags
+                            loadUserStats(); // Load user statistics
+                        } else {
+                            showToast('User data not found. Please log in again.', 'error');
+                            setTimeout(() => {
+                                window.location.href = 'indexz.html';
+                            }, 2000);
+                        }
+                    } catch (error) {
+                        console.error('Error getting user document:', error);
+                        showToast('Error loading user data', 'error');
+                    }
+                } else {
+                    // No user is signed in, redirect to login
+                    window.location.href = 'indexz.html';
+                }
+            });
+
+            // Set up event listeners
+            menuToggle.addEventListener('click', toggleSidebar);
+            logoutBtn.addEventListener('click', logout);
+            searchInput.addEventListener('input', filterProblems);
+        }
+
+        // Display user information in the sidebar and profile
+        function displayUserInfo(userData) {
+            const username = userData.username || 'User';
+            const joinDate = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString() : 'Unknown';
+
+            // Update sidebar
+            userAvatar.textContent = username.charAt(0).toUpperCase();
+            sidebarUsername.textContent = username;
+
+            // Update profile header
+            profileAvatar.textContent = username.charAt(0).toUpperCase();
+            profileUsername.textContent = username;
+            memberSince.textContent = joinDate;
+        }
+
+        // Load user statistics
+        async function loadUserStats() {
+            try {
+                // Count user's problems
+                const problemsSnapshot = await db.collection('problems')
+                    .where('userId', '==', currentUser.uid)
+                    .get();
+
+                userStats.problems = problemsSnapshot.size;
+
+                // Count solved problems
+                const solvedProblems = problemsSnapshot.docs.filter(doc => doc.data().solved).length;
+                userStats.solved = solvedProblems;
+
+                // Count user's answers
+                const answersSnapshot = await db.collection('answers')
+                    .where('userId', '==', currentUser.uid)
+                    .get();
+
+                userStats.answers = answersSnapshot.size;
+
+                // Update UI
+                problemsCount.textContent = userStats.problems;
+                solvedCount.textContent = userStats.solved;
+                answersCount.textContent = userStats.answers;
+            } catch (error) {
+                console.error('Error loading user stats:', error);
+            }
+        }
+
+        // Load user's votes from Firestore
+        async function loadUserVotes() {
+            try {
+                const votesSnapshot = await db.collection('votes')
+                    .where('userId', '==', currentUser.uid)
+                    .get();
+
+                userVotes = {};
+                votesSnapshot.forEach(doc => {
+                    const voteData = doc.data();
+                    userVotes[voteData.problemId] = voteData.voteType;
+                });
+
+                console.log('User votes loaded:', userVotes);
+            } catch (error) {
+                console.error('Error loading user votes:', error);
+            }
+        }
+
+        // Load trending tags from all problems
+        async function loadTrendingTags() {
+            try {
+                const problemsSnapshot = await db.collection('problems').get();
+                const tagCounts = {};
+
+                // Count all tags from all problems
+                problemsSnapshot.forEach(doc => {
+                    const problem = doc.data();
+                    if (problem.tags && Array.isArray(problem.tags)) {
+                        problem.tags.forEach(tag => {
+                            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                        });
+                    }
+                });
+
+                // Convert to array and sort by count
+                const tagArray = Object.entries(tagCounts).map(([tag, count]) => ({ tag, count }));
+                tagArray.sort((a, b) => b.count - a.count);
+
+                // Get top 6 tags
+                trendingTags = tagArray.slice(0, 6).map(item => item.tag);
+
+                // Update the UI
+                updateTrendingTagsUI();
+            } catch (error) {
+                console.error('Error loading trending tags:', error);
+                // Set default tags if there's an error
+                trendingTags = ['technology', 'science', 'programming', 'math', 'design', 'business'];
+                updateTrendingTagsUI();
+            }
+        }
+
+        // Update the trending tags UI
+        function updateTrendingTagsUI() {
+            trendingTagsContainer.innerHTML = '';
+
+            if (trendingTags.length === 0) {
+                trendingTagsContainer.innerHTML = '<div class="tag">No tags yet</div>';
+                return;
+            }
+
+            trendingTags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.textContent = `#${tag}`;
+                tagElement.setAttribute('data-tag', tag);
+
+                // Add click event to filter by this tag
+                tagElement.addEventListener('click', () => {
+                    searchInput.value = tag;
+                    filterProblems();
+                });
+
+                trendingTagsContainer.appendChild(tagElement);
+            });
+        }
+
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+
+        // Show toast notification
+        function showToast(message, type = '') {
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (type) toast.classList.add(type);
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Load user's problems from Firestore
+        function loadUserProblems() {
+            loadingSpinner.style.display = 'block';
+            problemFeed.innerHTML = '';
+
+            // Set up real-time listener for user's problems
+            problemsListener = db.collection('problems')
+                .where('userId', '==', currentUser.uid)
+                .onSnapshot(snapshot => {
+                    userProblems = [];
+                    snapshot.forEach(doc => {
+                        userProblems.push({ id: doc.id, ...doc.data() });
+                    });
+                    renderProblems();
+                    loadingSpinner.style.display = 'none';
+
+                    // Update user stats
+                    loadUserStats();
+                }, error => {
+                    console.error('Error getting user problems:', error);
+                    showToast('Error loading your problems', 'error');
+                    loadingSpinner.style.display = 'none';
+                });
+        }
+
+        // Render problems to the UI
+        function renderProblems() {
+            problemFeed.innerHTML = '';
+
+            if (userProblems.length === 0) {
+                problemFeed.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-question-circle"></i>
+            <h3>No problems yet</h3>
+            <p>You haven't posted any problems yet. Start by asking your first question!</p>
+            <a href="dashboard.html" class="browse-btn">Browse Problems</a>
+          </div>
+        `;
+                return;
+            }
+
+            userProblems.forEach(problem => {
+                const problemElement = createProblemElement(problem);
+                problemFeed.appendChild(problemElement);
+            });
+        }
+
+        // Create DOM element for a problem
+        function createProblemElement(problem) {
+            const problemDate = problem.createdAt ? problem.createdAt.toDate() : new Date();
+            const timeAgo = getTimeAgo(problemDate);
+
+            // Check if user has voted on this problem
+            const userVote = userVotes[problem.id] || null;
+            const upvoted = userVote === 'upvote';
+            const downvoted = userVote === 'downvote';
+
+            // Check if problem is solved
+            const isSolved = problem.solved || false;
+
+            const problemElement = document.createElement('div');
+            problemElement.className = `problem-card ${isSolved ? 'solved' : ''}`;
+            problemElement.innerHTML = `
+        <div class="problem-header">
+            <div class="avatar-wrapper">
+          <div class="problem-avatar">${problem.userName ? problem.userName.charAt(0).toUpperCase() : 'U'}</div>
+           <span class="verified-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="white">
+                <circle cx="12" cy="12" r="12" fill="#AB2330"></circle>
+                <path d="M10.2 15.3l-3-3 1.4-1.4 1.6 1.6 4.6-4.6 1.4 1.4-6 6z" fill="white"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="problem-user">${problem.userName || 'Unknown User'}</div>
+          <div class="problem-time">${timeAgo}</div>
+        </div>
+        <div class="problem-content">
+          <p>${problem.content}</p>
+        </div>
+        <div class="problem-tags">
+          ${problem.tags ? problem.tags.map(tag =>
+                `<div class="problem-tag" data-tag="${tag}">#${tag}</div>`
+            ).join('') : ''}
+        </div>
+        ${isSolved ? `<div class="solved-badge"><i class="fas fa-check-circle"></i> Solved</div>` : ''}
+        <div class="problem-actions">
+          <button class="action-btn upvote-btn ${upvoted ? 'upvoted' : ''} ${userVote ? 'disabled' : ''}" data-id="${problem.id}">
+            <i class="fas fa-arrow-up"></i>
+            <span>${problem.upvotes || 0}</span>
+          </button>
+          <button class="action-btn downvote-btn ${downvoted ? 'liked' : ''} ${userVote ? 'disabled' : ''}" data-id="${problem.id}">
+            <i class="fas fa-arrow-down"></i>
+            <span>${problem.downvotes || 0}</span>
+          </button>
+          <button class="action-btn comment-btn" data-id="${problem.id}">
+            <i class="far fa-comment"></i>
+            <span>${problem.answerCount || 0} Answers</span>
+          </button>
+          <button class="action-btn solve-btn ${isSolved ? 'solved' : ''}" data-id="${problem.id}">
+            <i class="fas fa-check-circle"></i>
+            <span>${isSolved ? 'Solved' : 'Mark Solved'}</span>
+          </button>
+        </div>
+        <div class="answers" id="answers-${problem.id}" style="display: none;">
+          <div class="answer-form">
+            <textarea class="answer-input" id="answer-input-${problem.id}" placeholder="Post your solution..."></textarea>
+            <button class="answer-btn" data-id="${problem.id}">Answer</button>
+          </div>
+          <div class="answers-container" id="answers-container-${problem.id}">
+            
+          </div>
+        </div>
+      `;
+
+            // Add event listeners to the problem element
+            const upvoteBtn = problemElement.querySelector('.upvote-btn');
+            const downvoteBtn = problemElement.querySelector('.downvote-btn');
+            const commentBtn = problemElement.querySelector('.comment-btn');
+            const solveBtn = problemElement.querySelector('.solve-btn');
+            const answerBtn = problemElement.querySelector('.answer-btn');
+            const answerInput = problemElement.querySelector('.answer-input');
+            const tags = problemElement.querySelectorAll('.problem-tag');
+
+
+             answerInput.addEventListener("input", function () {
+                this.style.height = "auto";
+                this.style.height = this.scrollHeight + "px";
+            });
+
+
+            upvoteBtn.addEventListener('click', () => upvoteProblem(problem.id));
+            downvoteBtn.addEventListener('click', () => downvoteProblem(problem.id));
+            commentBtn.addEventListener('click', () => toggleAnswers(problem.id));
+            solveBtn.addEventListener('click', () => toggleSolved(problem.id));
+            answerBtn.addEventListener('click', () => postAnswer(problem.id, answerInput));
+
+            tags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    searchInput.value = tag.getAttribute('data-tag');
+                    filterProblems();
+                });
+            });
+
+            // Load answers if already expanded
+            if (problemElement.querySelector('.answers').style.display === 'block') {
+                loadAnswers(problem.id);
+            }
+
+            return problemElement;
+        }
+
+        // Toggle answers visibility
+        function toggleAnswers(problemId) {
+            const answersSection = document.getElementById(`answers-${problemId}`);
+            const isVisible = answersSection.style.display === 'block';
+
+            answersSection.style.display = isVisible ? 'none' : 'block';
+
+            if (!isVisible) {
+                loadAnswers(problemId);
+            }
+        }
+
+        // Toggle solved status
+        async function toggleSolved(problemId) {
+            try {
+                const problem = userProblems.find(p => p.id === problemId);
+                if (!problem) return;
+
+                const isCurrentlySolved = problem.solved || false;
+
+                // Update the problem document directly with the solved status
+                await db.collection('problems').doc(problemId).update({
+                    solved: !isCurrentlySolved,
+                    solvedAt: !isCurrentlySolved ? firebase.firestore.FieldValue.serverTimestamp() : null
+                });
+
+                showToast(isCurrentlySolved ? 'Problem marked as unsolved' : 'Problem marked as solved!', 'success');
+
+                // The real-time listener will automatically update the UI
+            } catch (error) {
+                console.error('Error toggling solved status:', error);
+                showToast('Error updating solved status', 'error');
+            }
+        }
+
+        // Load answers for a problem
+        function loadAnswers(problemId) {
+            const answersContainer = document.getElementById(`answers-container-${problemId}`);
+            answersContainer.innerHTML = '<p>Loading answers...</p>';
+
+            // Set up real-time listener for answers
+            db.collection('answers')
+                .where('problemId', '==', problemId)
+                .onSnapshot(snapshot => {
+                    answersContainer.innerHTML = '';
+
+                    if (snapshot.empty) {
+                        answersContainer.innerHTML = '<p>No answers yet. Be the first to answer!</p>';
+                        return;
+                    }
+
+                    snapshot.forEach(doc => {
+                        const answer = doc.data();
+                        const answerDate = answer.createdAt ? answer.createdAt.toDate() : new Date();
+                        const timeAgo = getTimeAgo(answerDate);
+
+                        const answerElement = document.createElement('div');
+                        answerElement.className = 'answer-card';
+                        answerElement.innerHTML = `
+              <div class="answer-header">
+                <div class="answer-user">${answer.userName || 'Unknown User'}</div>
+                <div class="answer-time">${timeAgo}</div>
+              </div>
+              <div class="answer-content">
+                ${answer.content}
+              </div>
+            `;
+
+                        answersContainer.appendChild(answerElement);
+                    });
+                }, error => {
+                    console.error('Error loading answers:', error);
+                    answersContainer.innerHTML = '<p>Error loading answers.</p>';
+                });
+        }
+
+        // Post an answer to a problem
+        function postAnswer(problemId, answerInput) {
+            const content = answerInput.value.trim();
+
+            if (!content) {
+                showToast('Please write an answer', 'error');
+                return;
+            }
+
+            // Get current user data
+            db.collection('users').doc(currentUser.uid).get()
+                .then(userDoc => {
+                    if (!userDoc.exists) {
+                        showToast('User data not found', 'error');
+                        return;
+                    }
+
+                    const userData = userDoc.data();
+
+                    // Add answer to Firestore
+                    return db.collection('answers').add({
+                        content: content,
+                        problemId: problemId,
+                        userId: currentUser.uid,
+                        userName: userData.username,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                })
+                .then(() => {
+                    // Update answer count in the problem
+                    return db.collection('problems').doc(problemId).update({
+                        answerCount: firebase.firestore.FieldValue.increment(1)
+                    });
+                })
+                .then(() => {
+                    answerInput.value = '';
+                    showToast('Answer posted successfully!', 'success');
+                    // Answers will automatically refresh due to the real-time listener
+                })
+                .catch(error => {
+                    console.error('Error posting answer:', error);
+                    showToast('Error posting answer', 'error');
+                });
+        }
+
+        // Upvote a problem
+        async function upvoteProblem(problemId) {
+            // Check if user already voted
+            if (userVotes[problemId]) {
+                showToast('You have already voted on this problem', 'error');
+                return;
+            }
+
+            try {
+                // Record the vote
+                await db.collection('votes').add({
+                    problemId: problemId,
+                    userId: currentUser.uid,
+                    voteType: 'upvote',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Update the problem's upvote count
+                await db.collection('problems').doc(problemId).update({
+                    upvotes: firebase.firestore.FieldValue.increment(1)
+                });
+
+                // Update local state
+                userVotes[problemId] = 'upvote';
+
+                // Refresh the problems to show updated vote counts
+                loadUserProblems();
+
+                showToast('Upvoted successfully!', 'success');
+            } catch (error) {
+                console.error('Error upvoting problem:', error);
+                showToast('Error upvoting problem', 'error');
+            }
+        }
+
+        // Downvote a problem
+        async function downvoteProblem(problemId) {
+            // Check if user already voted
+            if (userVotes[problemId]) {
+                showToast('You have already voted on this problem', 'error');
+                return;
+            }
+
+            try {
+                // Record the vote
+                await db.collection('votes').add({
+                    problemId: problemId,
+                    userId: currentUser.uid,
+                    voteType: 'downvote',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Update the problem's downvote count
+                await db.collection('problems').doc(problemId).update({
+                    downvotes: firebase.firestore.FieldValue.increment(1)
+                });
+
+                // Update local state
+                userVotes[problemId] = 'downvote';
+
+                // Refresh the problems to show updated vote counts
+                loadUserProblems();
+
+                showToast('Downvoted successfully!', 'success');
+            } catch (error) {
+                console.error('Error downvoting problem:', error);
+                showToast('Error downvoting problem', 'error');
+            }
+        }
+
+
+        // Filter problems based on search input
+        function filterProblems() {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            if (!searchTerm) {
+                renderProblems();
+                return;
+            }
+
+            const filteredProblems = userProblems.filter(problem => {
+                return (
+                    problem.content.toLowerCase().includes(searchTerm) ||
+                    (problem.tags && problem.tags.some(tag =>
+                        tag.toLowerCase().includes(searchTerm.replace('#', ''))
+                    )) ||
+                    (problem.userName && problem.userName.toLowerCase().includes(searchTerm))
+                );
+            });
+
+            renderFilteredProblems(filteredProblems);
+        }
+
+        // Render filtered problems
+        function renderFilteredProblems(filteredProblems) {
+            problemFeed.innerHTML = '';
+
+            if (filteredProblems.length === 0) {
+                problemFeed.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-search"></i>
+            <h3>No matching problems</h3>
+            <p>No problems match your search criteria. Try different keywords.</p>
+          </div>
+        `;
+                return;
+            }
+
+            filteredProblems.forEach(problem => {
+                const problemElement = createProblemElement(problem);
+                problemFeed.appendChild(problemElement);
+            });
+        }
+
+        // Get time ago string
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+
+            if (diffInSeconds < 60) {
+                return `${diffInSeconds} seconds ago`;
+            }
+
+            const diffInMinutes = Math.floor(diffInSeconds / 60);
+            if (diffInMinutes < 60) {
+                return `${diffInMinutes} minutes ago`;
+            }
+
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            if (diffInHours < 24) {
+                return `${diffInHours} hours ago`;
+            }
+
+            const diffInDays = Math.floor(diffInHours / 24);
+            if (diffInDays < 30) {
+                return `${diffInDays} days ago`;
+            }
+
+            return date.toLocaleDateString();
+        }
+
+        // Logout user
+        function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                auth.signOut()
+                    .then(() => {
+                        window.location.href = 'indexz.html';
+                    })
+                    .catch(error => {
+                        console.error('Error signing out:', error);
+                        showToast('Error signing out', 'error');
+                    });
+            }
+        }
+
+         const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+            window.onscroll = function () {
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                    scrollTopBtn.style.display = "block";
+                } else {
+                    scrollTopBtn.style.display = "none";
+                }
+            };
+
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+
+</html>
+
+

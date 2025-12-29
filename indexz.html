@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Void | Login and Sign up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to the official website of Void. Social Network for a World of Problem-Solvers." />
+    <meta name="author" content="Shoaib Ali" />
+   <link rel="icon" type="image/png" href="images.png">
+    
+    
+    <meta property="og:title" content="Void" />
+    <meta property="og:description" content="Social Network for a World of Problem-Solvers." />
+    <meta property="og:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta property="og:url" content="https://www.projectvoid.in" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Void" />
+    
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Void" />
+    <meta name="twitter:description" content="Social Network for a World of Problem-Solvers." />
+    <meta name="twitter:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta name="twitter:site" content="@exploremiracles" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             background: linear-gradient(135deg, #141414, #202020);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .math-element {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.15);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            user-select: none;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(100, 200, 255, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .grid-line {
+            position: absolute;
+            background: rgba(100, 200, 255, 0.03);
+            z-index: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #4ade80, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+            text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.4rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            max-width: 300px;
+            line-height: 1.4;
+        }
+
+        .card-container {
+            flex: 1;
+            max-width: 420px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent,
+                    rgba(99, 102, 241, 0.05),
+                    rgba(236, 72, 153, 0.05),
+                    transparent);
+            transform: rotate(45deg);
+            animation: shine 6s infinite linear;
+            z-index: 1;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f3f4f6;
+            border-radius: 14px;
+            padding: 6px;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tabs button {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 10px;
+            z-index: 2;
+            transition: color 0.3s;
+            color: var(--gray);
+        }
+
+        .tabs button.active {
+            color: var(--dark);
+        }
+
+        .slider {
+            position: absolute;
+            height: calc(100% - 12px);
+            width: calc(50% - 6px);
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+
+        .slider.login {
+            transform: translateX(0);
+        }
+
+        .slider.signup {
+            transform: translateX(100%);
+        }
+
+        .form {
+            display: none;
+            animation: fadeIn 0.4s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.25rem;
+            z-index: 12;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(0, 0, 0, 0.699);
+            z-index: 12;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        input.success {
+            border-color: var(--success);
+        }
+
+        input.error {
+            border-color: var(--error);
+        }
+
+        .input-feedback {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            padding-left: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-feedback i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+            position: static;
+            transform: none;
+        }
+
+        .input-feedback.success {
+            color: var(--success);
+        }
+
+        .input-feedback.error {
+            color: var(--error);
+        }
+
+        button.action-btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 10px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        button.action-btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        button.action-btn:disabled:hover {
+            transform: none;
+        }
+
+        button.action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            transition: 0.5s;
+        }
+
+        button.action-btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        button.action-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+        }
+
+        button.action-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .message {
+            margin-top: 1rem;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            display: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                transform: rotate(45deg) translateX(-100%);
+            }
+
+            100% {
+                transform: rotate(45deg) translateX(100%);
+            }
+        }
+
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .logo {
+                text-align: center;
+            }
+
+            .logo p {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px){
+
+            .container {
+            gap: 10px;
+        } 
+            .logo h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+             }
+              .logo p {
+            font-size: 1rem;
+              }
+
+        h2 {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+         button.action-btn {
+            padding: 10px;
+         }
+         input {
+            font-size: 0.8rem;
+            padding: 16px 16px 16px 40px;
+         }
+         .tabs button {
+            font-size: 0.8rem;
+         }
+          .input-group i {
+            color: rgba(0, 0, 0, 0.699);
+            z-index: 12;
+        }
+
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 2rem 1.5rem;
+            }
+
+            .logo h1 {
+                font-size: 2rem;
+            }
+
+            input {
+                padding: 14px 14px 14px 44px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-elements" id="backgroundElements"></div>
+
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">
+                <h1> Void</h1>
+                <p>Collective Problem Solving</p>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card">
+                <div class="tabs">
+                    <div class="slider login"></div>
+                    <button id="loginTab" class="active">Login</button>
+                    <button id="signupTab">Sign Up</button>
+                </div>
+
+                
+                <div id="loginForm" class="form active">
+                    <h2>Welcome back</h2>
+
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="Email address">
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Password">
+                    </div>
+
+                    <button id="loginBtn" class="action-btn">Login</button>
+
+                    <div id="loginMessage" class="message"></div>
+
+
+                    <div class="footer">
+                        <a href="forgot.html">Forgot your password?</a>
+                    </div>
+                </div>
+
+                
+                <div id="signupForm" class="form">
+                    <h2>Create account</h2>
+
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Choose a username">
+                        <div id="usernameFeedback" class="input-feedback"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Email address">
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password">
+                    </div>
+
+                    <button id="signupBtn" class="action-btn" disabled>Sign Up</button>
+
+                    <div id="signupMessage" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script>
+        // Firebase Configuration (replace with your actual config)
+        var firebaseConfig = {
+                apiKey: "AIzaSyAxQoFW6QiaazIcvkEPsYbnTv7zfKe8c-Y",
+                authDomain: "patternetweb.firebaseapp.com",
+                projectId: "patternetweb",
+                storageBucket: "patternetweb.firebasestorage.app",
+                messagingSenderId: "78400752693",
+                appId: "1:78400752693:web:540fbbcab615e6b078b57c"
+            };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+    <script>
+        // Create animated background elements
+        function createBackgroundElements() {
+            const container = document.getElementById('backgroundElements');
+
+            // Create grid lines
+            for (let i = 0; i < 20; i++) {
+                const line = document.createElement('div');
+                line.className = 'grid-line';
+
+                if (i % 2 === 0) {
+                    // Horizontal lines
+                    line.style.width = '100%';
+                    line.style.height = '1px';
+                    line.style.top = `${(i / 20) * 100}%`;
+                    line.style.left = '0';
+                } else {
+                    // Vertical lines
+                    line.style.width = '1px';
+                    line.style.height = '100%';
+                    line.style.left = `${(i / 20) * 100}%`;
+                    line.style.top = '0';
+                }
+
+                container.appendChild(line);
+            }
+
+            // Create mathematical equations
+            const equations = [
+                'E = mc²',                                  // Einstein’s mass-energy equivalence
+                'F = ma',                                   // Newton’s second law of motion
+                'a² + b² = c²',                             // Pythagoras theorem (geometry basis for vectors)
+                '∇·E = ρ/ε₀',                               // Gauss’s law for electric fields
+                '∇·B = 0',                                  // Gauss’s law for magnetism
+                '∇×E = -∂B/∂t',                             // Faraday’s law of induction
+                '∇×B = μ₀J + μ₀ε₀∂E/∂t',                     // Ampère-Maxwell law
+                'iħ∂Ψ/∂t = HΨ',                             // Schrödinger equation (quantum mechanics)
+                'ΔG = ΔH - TΔS',                            // Gibbs free energy (thermodynamics/chemistry)
+                'PV = nRT'                                  // Ideal gas law (chemistry/thermodynamics)
+            ];
+
+            for (let i = 0; i < 15; i++) {
+                const equation = document.createElement('div');
+                equation.className = 'math-element';
+                equation.textContent = equations[Math.floor(Math.random() * equations.length)];
+                equation.style.fontSize = `${14 + Math.random() * 10}px`;
+                equation.style.top = `${Math.random() * 100}%`;
+                equation.style.left = `${Math.random() * 100}%`;
+                equation.style.opacity = `${0.1 + Math.random() * 0.1}`;
+
+                // Animation
+                const duration = 30 + Math.random() * 60;
+                equation.style.animation = `float ${duration}s linear infinite`;
+
+                container.appendChild(equation);
+            }
+
+            // Create geometric shapes
+            for (let i = 0; i < 10; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'shape';
+
+                const size = 20 + Math.random() * 100;
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+                shape.style.top = `${Math.random() * 100}%`;
+                shape.style.left = `${Math.random() * 100}%`;
+
+                // Random border color with low opacity
+                const colors = [
+                    'rgba(96, 165, 250, 0.1)',
+                    'rgba(139, 92, 246, 0.1)',
+                    'rgba(16, 185, 129, 0.1)',
+                    'rgba(245, 158, 11, 0.1)',
+                    'rgba(239, 68, 68, 0.1)'
+                ];
+                shape.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+
+                // Animation
+                const duration = 20 + Math.random() * 40;
+                shape.style.animation = `rotate ${duration}s linear infinite, pulse ${duration / 2}s ease-in-out infinite alternate`;
+
+                container.appendChild(shape);
+            }
+
+            // Add CSS for animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes float {
+                    0% {
+                        transform: translate(0, 0) rotate(0deg);
+                    }
+                    25% {
+                        transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(90deg);
+                    }
+                    50% {
+                        transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(180deg);
+                    }
+                    75% {
+                        transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(270deg);
+                    }
+                    100% {
+                        transform: translate(0, 0) rotate(360deg);
+                    }
+                }
+                
+                @keyframes rotate {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+                
+                @keyframes pulse {
+                    0% {
+                        transform: scale(1);
+                    }
+                    100% {
+                        transform: scale(1.1);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Initialize background elements
+        createBackgroundElements();
+
+        // Toggle Tabs with Slider Animation
+        const loginTab = document.getElementById("loginTab");
+        const signupTab = document.getElementById("signupTab");
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+        const slider = document.querySelector(".slider");
+
+        loginTab.addEventListener("click", () => {
+            loginTab.classList.add("active");
+            signupTab.classList.remove("active");
+            loginForm.classList.add("active");
+            signupForm.classList.remove("active");
+            slider.classList.remove("signup");
+            slider.classList.add("login");
+        });
+
+        signupTab.addEventListener("click", () => {
+            signupTab.classList.add("active");
+            loginTab.classList.remove("active");
+            signupForm.classList.add("active");
+            loginForm.classList.remove("active");
+            slider.classList.remove("login");
+            slider.classList.add("signup");
+        });
+
+        // Username validation variables
+        let usernameCheckTimeout = null;
+        let isUsernameAvailable = false;
+
+        // Username validation function
+        async function checkUsernameAvailability() {
+            const username = document.getElementById("username").value.trim();
+            const feedback = document.getElementById("usernameFeedback");
+            const signupBtn = document.getElementById("signupBtn");
+            const usernameInput = document.getElementById("username");
+
+            // Reset state
+            isUsernameAvailable = false;
+            signupBtn.disabled = true;
+            usernameInput.classList.remove("success", "error");
+            feedback.textContent = "";
+
+            if (!username) {
+                return;
+            }
+
+            // Validate username format
+            if (username.length < 3) {
+                feedback.innerHTML = '<i class="fas fa-times-circle"></i> Username must be at least 3 characters';
+                feedback.className = "input-feedback error";
+                usernameInput.classList.add("error");
+                return;
+            }
+
+            if (username.length > 20) {
+                feedback.innerHTML = '<i class="fas fa-times-circle"></i> Username must be less than 20 characters';
+                feedback.className = "input-feedback error";
+                usernameInput.classList.add("error");
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                feedback.innerHTML = '<i class="fas fa-times-circle"></i> Username can only contain letters, numbers, and underscores';
+                feedback.className = "input-feedback error";
+                usernameInput.classList.add("error");
+                return;
+            }
+
+            // Check if username is available
+            try {
+                const snapshot = await db.collection("users")
+                    .where("username", "==", username)
+                    .get();
+
+                if (snapshot.empty) {
+                    feedback.innerHTML = '<i class="fas fa-check-circle"></i> Username is available';
+                    feedback.className = "input-feedback success";
+                    usernameInput.classList.add("success");
+                    isUsernameAvailable = true;
+                    signupBtn.disabled = false;
+                } else {
+                    feedback.innerHTML = '<i class="fas fa-times-circle"></i> Username is already taken';
+                    feedback.className = "input-feedback error";
+                    usernameInput.classList.add("error");
+                }
+            } catch (error) {
+                console.error("Error checking username:", error);
+                feedback.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error checking username availability';
+                feedback.className = "input-feedback error";
+                usernameInput.classList.add("error");
+            }
+        }
+
+        // Debounce function to limit Firestore queries
+        function debounce(func, delay) {
+            return function () {
+                const context = this;
+                const args = arguments;
+                clearTimeout(usernameCheckTimeout);
+                usernameCheckTimeout = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
+        // Firebase Authentication
+        document.getElementById("signupBtn").addEventListener("click", async () => {
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const msg = document.getElementById("signupMessage");
+
+            if (!username || !email || !password) {
+                msg.textContent = "Please fill in all fields.";
+                msg.className = "message error";
+                msg.style.display = "block";
+                return;
+            }
+
+            // Double-check username availability
+            if (!isUsernameAvailable) {
+                msg.textContent = "Please choose an available username.";
+                msg.className = "message error";
+                msg.style.display = "block";
+                return;
+            }
+
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                await db.collection("users").doc(user.uid).set({
+                    username: username,
+                    email: email,
+                    createdAt: new Date().toISOString()
+                });
+
+                msg.textContent = "Account created successfully!";
+                msg.className = "message success";
+                msg.style.display = "block";
+
+                // Clear form
+                document.getElementById("username").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("password").value = "";
+
+                // Switch to login after successful signup
+                setTimeout(() => {
+                    loginTab.click();
+                }, 2000);
+            } catch (error) {
+                msg.textContent = error.message;
+                msg.className = "message error";
+                msg.style.display = "block";
+            }
+        });
+
+        document.getElementById("loginBtn").addEventListener("click", async () => {
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value.trim();
+            const msg = document.getElementById("loginMessage");
+
+            if (!email || !password) {
+                msg.textContent = "Please enter email and password.";
+                msg.className = "message error";
+                msg.style.display = "block";
+                return;
+            }
+
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                msg.textContent = "Login successful! Redirecting...";
+                msg.className = "message success";
+                msg.style.display = "block";
+
+                setTimeout(() => {
+                    window.location.href = "os.html";
+                }, 1500);
+            } catch (error) {
+                msg.textContent = error.message;
+                msg.className = "message error";
+                msg.style.display = "block";
+            }
+        });
+
+        // Add event listener for username input
+        document.getElementById("username").addEventListener("input", debounce(checkUsernameAvailability, 500));
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Void | Timeline</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to the official website of Void. Social Network for a World of Problem-Solvers." />
+    <meta name="author" content="Shoaib Ali" />
+<link rel="icon" type="image/png" href="images.png">
+    
+    
+    <meta property="og:title" content="Void" />
+    <meta property="og:description" content="Social Network for a World of Problem-Solvers." />
+    <meta property="og:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta property="og:url" content="https://www.projectvoid.in" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Void" />
+    
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Void" />
+    <meta name="twitter:description" content="Social Network for a World of Problem-Solvers." />
+    <meta name="twitter:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta name="twitter:site" content="@exploremiracles" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+            --success: #10b981;
+            --error: #ef4444;
+            --card-bg: #ffffff;
+            --sidebar-bg: #1f2937;
+            --content-bg: #f3f4f6;
+            --timeline-primary: #6366f1;
+            --timeline-secondary: #8b5cf6;
+            --timeline-accent: #ec4899;
+            --timeline-resolved: #10b981;
+            --timeline-pending: #f59e0b;
+        }
+
+        body {
+            background: linear-gradient(120deg, #0A0A0A, #0D1B2A, #000000);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        
+        .sidebar {
+            width: 260px;
+            background: transparent;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+         overflow-y: auto;   
+    overflow-x: hidden;
+    }
+    .sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: wheat;
+            margin-right: 0.75rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: wheat;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+           background: rgba(245, 222, 179, 0.527);
+        }
+
+        .nav-item i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .nav-item span {
+            font-weight: 500;
+        }
+
+        .user-section {
+            margin-top: auto;
+            padding: 1rem 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(239, 68, 68, 0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn i {
+            margin-right: 0.5rem;
+        }
+
+        
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title.minimal {
+    background: linear-gradient(135deg, rgb(247, 211, 146), rgb(252, 215, 146));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: 
+        minimalEntrance 1s ease-out forwards,
+        minimalShimmer 4s ease-in-out infinite;
+    padding: 0.25rem 0.5rem;
+}
+
+@keyframes minimalEntrance {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+        letter-spacing: 5px;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        letter-spacing: normal;
+    }
+}
+
+@keyframes minimalShimmer {
+    0%, 100% {
+        background-position: 0% center;
+        filter: brightness(1);
+    }
+    50% {
+        background-position: 100% center;
+        filter: brightness(1.2);
+    }
+}
+
+.page-title.minimal::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: wheat;
+    animation: minimalUnderline 1.2s ease-out 0.5s forwards;
+}
+
+@keyframes minimalUnderline {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+    100% {
+        width: 100%;
+        left: 0;
+    }
+}
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-bar i {
+            color: var(--gray);
+            margin-right: 0.5rem;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        
+        .problems-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .problem-item {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .problem-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .problem-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .problem-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .problem-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-open {
+            background: rgba(164, 235, 98, 0.349);
+            color: rgb(0, 0, 0);
+        }
+
+        .problem-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .problem-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .problem-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .problem-tag {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .problem-preview {
+            color: var(--gray);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        
+        .timeline-view {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .back-btn {
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #e5e7eb;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: #f9fafb;
+            border-left: 4px solid var(--timeline-primary);
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item.insight {
+            border-left-color: var(--timeline-secondary);
+        }
+
+        .timeline-item.solution {
+            border-left-color: var(--timeline-accent);
+        }
+
+        .timeline-item.resolved {
+            border-left-color: var(--timeline-resolved);
+        }
+
+        .timeline-item.update {
+            border-left-color: var(--timeline-pending);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -36px;
+            top: 24px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--timeline-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+        }
+
+        .timeline-item.insight .timeline-dot {
+            background: var(--timeline-secondary);
+        }
+
+        .timeline-item.solution .timeline-dot {
+            background: var(--timeline-accent);
+        }
+
+        .timeline-item.resolved .timeline-dot {
+            background: var(--timeline-resolved);
+        }
+
+        .timeline-item.update .timeline-dot {
+            background: var(--timeline-pending);
+        }
+
+        .timeline-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .timeline-item-time {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .timeline-item-content {
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .timeline-item-user {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .user-avatar-sm {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.7rem;
+        }
+
+        
+        .add-event {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .add-event-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .event-type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .event-type-btn {
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .event-type-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .event-form {
+            display: none;
+        }
+
+        .event-form.active {
+            display: block;
+        }
+
+        .event-input {
+            width: 100%;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            resize: none;
+            min-height: 120px;
+            transition: border-color 0.3s;
+        }
+
+        .event-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .event-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .event-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .event-cancel {
+            background: #f3f4f6;
+            color: var(--dark);
+        }
+
+        .event-cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .event-submit {
+            background: var(--primary);
+            color: white;
+        }
+
+        .event-submit:hover {
+            background: var(--primary-dark);
+        }
+         .menu-toggle {
+            display: none;
+        }
+
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 1rem 0.5rem;
+            }
+
+            .logo h1,
+            .nav-item span,
+            .user-info span {
+                display: none;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .logo i {
+                margin-right: 0;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 0.75rem;
+            }
+
+            .nav-item i {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: 80px;
+            }
+            .logout-btn span{
+                display: none;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+                margin-left: 0;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                z-index: 1200;
+    background-color: #000000;
+            }
+             .logout-btn span{
+                display: none;
+
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 1100;
+                color: wheat;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .timeline-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        
+       
+
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .problem-item,
+        .timeline-item {
+            animation: fadeIn 0.4s ease;
+        }
+
+           #scrollTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  color: wheat;
+  border: none;
+  padding: 12px;
+  border-radius: 20%;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+  /* Transparent blurred background */
+  background-color: rgba(255, 255, 255, 0.1); /* slight tint so blur is visible */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+    #scrollTopBtn:hover {
+      background-color: rgb(243, 188, 85);
+    }
+    </style>
+</head>
+
+<body>
+    
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fa-solid fa-cube"></i>
+    </div>
+
+    
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-cube"></i>
+            <h1> Void</h1>
+        </div>
+
+        <a href="os.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+        <i class="fa-solid fa-cubes"></i>
+        <span>VoidOS</span>
+      </div>
+       </a>
+
+<a href="dashboard.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </div>
+</a>
+
+<a href="users.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+    </div>
+</a>
+
+<a href="chain.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-link"></i>
+        <span>Synaptic Chain</span>
+    </div>
+</a>
+
+<a href="profile.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>My Profile</span>
+    </div>
+</a>
+
+
+    <div class="nav-item active">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Timeline</span>
+    </div>
+
+
+<a href="status.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fa-solid fa-water"></i>
+        <span>Wave</span>
+    </div>
+</a>
+
+<a href="Saved.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fa-solid fa-dna"></i>
+        <span>Sequence</span>
+    </div>
+</a>
+
+<a href="personal.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-sticky-note"></i>
+        <span>My Personal Space</span>
+    </div>
+</a>
+
+<a href="articles.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-book-open"></i>
+        <span>Research Library</span>
+    </div>
+</a>
+
+         <a href="voidfeed.html" style="color: inherit; text-decoration: none;">
+      <div class="nav-item">
+      <i class="fa-solid fa-rss"></i>
+        <span>VoidFeed</span>
+      </div>
+    </a>
+
+<a href="node.html" style="color: inherit; text-decoration: none;">
+    <div class="nav-item">
+        <i class="fas fa-solid fa-cube"></i>
+        <span>Mind Lattice</span>
+    </div>
+</a>
+
+<hr style="margin: 0; border: 0; border-top: 1px solid #ccc;">
+
+<a href="time.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+    <div class="nav-item">
+        <i class="fas fa-clock" style="font-size: 14px;"></i>
+        <span>Time Insights</span>
+    </div>
+</a>
+
+<a href="feature.html" style="color: inherit; text-decoration: none; font-size: 14px;">
+    <div class="nav-item">
+        <i class="fas fa-lightbulb" style="font-size: 14px;"></i>
+        <span>Feature Requests</span>
+    </div>
+</a>
+
+<a href="settings.html" style="color: inherit; text-decoration: none;font-size: 14px;">
+    <div class="nav-item">
+        <i class="fas fa-cog" style="font-size: 14px;"></i>
+        <span>Settings</span>
+    </div>
+</a>
+
+<a href="about.html" style="color: inherit; text-decoration: none;font-size: 14px;">
+    <div class="nav-item">
+        <i class="fa-solid fa-terminal" style="font-size: 14px;"></i>
+        <span>About</span>
+    </div>
+</a>
+
+<div class="user-section">
+    <div class="user-info">
+        <div class="user-avatar" id="user-avatar">SA</div>
+        <span id="sidebar-username">Loading...</span>
+    </div>
+    <button class="logout-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Log Out</span>
+    </button>
+</div>
+</div>
+
+    
+    <div class="main-content">
+        <div class="header">
+            <h2 class="page-title minimal">Problem Timelines</h2>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search problems...">
+            </div>
+        </div>
+
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Problems</button>
+            <button class="filter-btn" data-filter="my">My Problems</button>
+        </div>
+
+        
+        <div class="problems-list" id="problemsList">
+            
+        </div>
+
+        
+        <div class="timeline-view" id="timelineView">
+            <div class="timeline-header">
+                <h3 class="timeline-title" id="timelineTitle">Problem Timeline</h3>
+                <button class="back-btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Problems
+                </button>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-items" id="timelineItems">
+                    
+                </div>
+            </div>
+
+            
+            <div class="add-event">
+                <h4 class="add-event-title">Add to Timeline</h4>
+                <div class="event-type-selector">
+                    <button class="event-type-btn active" data-type="update">Status Update</button>
+                    <button class="event-type-btn" data-type="insight">Key Insight</button>
+                    <button class="event-type-btn" data-type="solution">Solution Attempt</button>
+                </div>
+
+                <div class="event-form active" id="updateForm">
+                    <textarea class="event-input" id="updateInput"
+                        placeholder="Describe the status update..."></textarea>
+                    <div class="event-actions">
+                        <button class="event-btn event-cancel">Cancel</button>
+                        <button class="event-btn event-submit">Add Update</button>
+                    </div>
+                </div>
+
+                <div class="event-form" id="insightForm">
+                    <textarea class="event-input" id="insightInput" placeholder="Share your key insight..."></textarea>
+                    <div class="event-actions">
+                        <button class="event-btn event-cancel">Cancel</button>
+                        <button class="event-btn event-submit">Add Insight</button>
+                    </div>
+                </div>
+
+                <div class="event-form" id="solutionForm">
+                    <textarea class="event-input" id="solutionInput"
+                        placeholder="Describe your solution attempt..."></textarea>
+                    <div class="event-actions">
+                        <button class="event-btn event-cancel">Cancel</button>
+                        <button class="event-btn event-submit">Add Solution</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="scrollTopBtn" onclick="scrollToTop()">
+        <i class="fa-solid fa-turn-up"></i>
+    </button>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script>
+
+         const currentPage = "timeline";
+            let startTime = Date.now();
+
+            // Load previous value
+            let storedTime = parseInt(localStorage.getItem(`time_${currentPage}`)) || 0;
+
+            // Track today's time
+            const today = new Date().toDateString();
+            let todayStoredTime = parseInt(localStorage.getItem(`time_${currentPage}_${today}`)) || 0;
+
+            setInterval(() => {
+                let secondsOnPage = Math.floor((Date.now() - startTime) / 1000);
+
+                // Update total time for this page
+                storedTime += secondsOnPage;
+                localStorage.setItem(`time_${currentPage}`, storedTime);
+
+                // Update today's time
+                todayStoredTime += secondsOnPage;
+                localStorage.setItem(`time_${currentPage}_${today}`, todayStoredTime);
+
+                // Reset start time
+                startTime = Date.now();
+            }, 10000);
+
+            window.addEventListener('beforeunload', () => {
+                let secondsOnPage = Math.floor((Date.now() - startTime) / 1000);
+                storedTime += secondsOnPage;
+                todayStoredTime += secondsOnPage;
+
+                localStorage.setItem(`time_${currentPage}`, storedTime);
+                localStorage.setItem(`time_${currentPage}_${today}`, todayStoredTime);
+            });
+
+        // Firebase Configuration (replace with your actual config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxQoFW6QiaazIcvkEPsYbnTv7zfKe8c-Y",
+            authDomain: "patternetweb.firebaseapp.com",
+            projectId: "patternetweb",
+            storageBucket: "patternetweb.firebasestorage.app",
+            messagingSenderId: "78400752693",
+            appId: "1:78400752693:web:540fbbcab615e6b078b57c"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Global variables
+        let currentUser = null;
+        let problems = [];
+        let currentProblem = null;
+        let problemsListener = null;
+        let timelineListener = null;
+
+        // DOM Elements
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const problemsList = document.getElementById('problemsList');
+        const timelineView = document.getElementById('timelineView');
+        const timelineTitle = document.getElementById('timelineTitle');
+        const timelineItems = document.getElementById('timelineItems');
+        const backBtn = document.getElementById('backBtn');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const userAvatar = document.getElementById('user-avatar');
+        const sidebarUsername = document.getElementById('sidebar-username');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const eventTypeBtns = document.querySelectorAll('.event-type-btn');
+        const eventForms = document.querySelectorAll('.event-form');
+        const updateInput = document.getElementById('updateInput');
+        const insightInput = document.getElementById('insightInput');
+        const solutionInput = document.getElementById('solutionInput');
+
+        // Initialize the application
+        function initApp() {
+            // Check authentication state
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    console.log('User signed in:', user.uid);
+                    
+                    // Get user data from Firestore
+                    try {
+                        const userDoc = await db.collection('users').doc(user.uid).get();
+                        if (userDoc.exists) {
+                            const userData = userDoc.data();
+                            displayUserInfo(userData);
+                            loadProblems();
+                        } else {
+                            alert('User data not found. Please log in again.');
+                            setTimeout(() => {
+                                window.location.href = 'indexz.html';
+                            }, 2000);
+                        }
+                    } catch (error) {
+                        console.error('Error getting user document:', error);
+                        alert('Error loading user data');
+                    }
+                } else {
+                    // No user is signed in, redirect to login
+                    window.location.href = 'indexz.html';
+                }
+            });
+
+            // Set up event listeners
+            menuToggle.addEventListener('click', toggleSidebar);
+            backBtn.addEventListener('click', showProblemsList);
+            logoutBtn.addEventListener('click', logout);
+            searchInput.addEventListener('input', filterProblems);
+            
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterProblems();
+                });
+            });
+            
+            // Event type buttons
+            eventTypeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const type = btn.getAttribute('data-type');
+                    eventTypeBtns.forEach(b => b.classList.remove('active'));
+                    eventForms.forEach(f => f.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(`${type}Form`).classList.add('active');
+                });
+            });
+            
+            // Form submissions
+            document.querySelectorAll('.event-submit').forEach(btn => {
+                btn.addEventListener('click', addTimelineEvent);
+            });
+            
+            document.querySelectorAll('.event-cancel').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    updateInput.value = '';
+                    insightInput.value = '';
+                    solutionInput.value = '';
+
+                    showProblemsList();
+                });
+            });
+        }
+
+        // Display user information in the sidebar
+        function displayUserInfo(userData) {
+            const username = userData.username || 'User';
+            userAvatar.textContent = username.charAt(0).toUpperCase();
+            sidebarUsername.textContent = username;
+        }
+
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+
+        // Load problems from Firestore
+        function loadProblems() {
+            problemsList.innerHTML = '<div class="loading" style="color:white;">Loading problems...</div>';
+            
+            // Set up real-time listener for problems
+            problemsListener = db.collection('problems')
+                .onSnapshot(snapshot => {
+                    problems = [];
+                    snapshot.forEach(doc => {
+                        problems.push({ id: doc.id, ...doc.data() });
+                    });
+                    renderProblems();
+                }, error => {
+                    console.error('Error getting problems:', error);
+                    problemsList.innerHTML = '<div class="error">Error loading problems</div>';
+                });
+        }
+
+        // Render problems to the UI
+        function renderProblems() {
+            problemsList.innerHTML = '';
+            
+            if (problems.length === 0) {
+                problemsList.innerHTML = '<div class="empty">No problems found</div>';
+                return;
+            }
+            
+            const filter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            problems.forEach(problem => {
+                // Apply filters
+                if (filter === 'my' && problem.userId !== currentUser.uid) return;
+                
+                // Apply search
+                if (searchTerm && !(
+                    problem.content.toLowerCase().includes(searchTerm) ||
+                    (problem.userName && problem.userName.toLowerCase().includes(searchTerm)) ||
+                    (problem.tags && problem.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
+                )) return;
+                
+                const problemElement = createProblemElement(problem);
+                problemsList.appendChild(problemElement);
+            });
+            
+            if (problemsList.innerHTML === '') {
+                problemsList.innerHTML = '<div class="empty">No problems match your filters</div>';
+            }
+        }
+
+        // Create DOM element for a problem
+        function createProblemElement(problem) {
+            const problemDate = problem.createdAt ? problem.createdAt.toDate() : new Date();
+            const timeAgo = getTimeAgo(problemDate);
+            const answerCount = problem.answerCount || 0;
+            
+            const problemElement = document.createElement('div');
+            problemElement.className = 'problem-item';
+            problemElement.setAttribute('data-id', problem.id);
+            
+            problemElement.innerHTML = `
+                <div class="problem-item-header">
+                    <h3 class="problem-title">${problem.content.substring(0, 60)}${problem.content.length > 60 ? '...' : ''}</h3>
+                    <div class="problem-status status-${problem.status || 'open'}">
+                        ${problem.status === 'open' ? 'Open' : 
+                          problem.status === 'progress' ? 'In Progress' : 'Event'}
+                    </div>
+                </div>
+                <div class="problem-meta">
+                    <span><i class="fas fa-user"></i> ${problem.userName || 'Unknown User'}</span>
+                    <span><i class="fas fa-clock"></i> ${timeAgo}</span>
+                    <span><i class="fas fa-comments"></i> ${answerCount} answers</span>
+                </div>
+                ${problem.tags && problem.tags.length > 0 ? `
+                    <div class="problem-tags">
+                        ${problem.tags.map(tag => `<div class="problem-tag">#${tag}</div>`).join('')}
+                    </div>
+                ` : ''}
+                <p class="problem-preview">${problem.content.substring(0, 120)}${problem.content.length > 120 ? '...' : ''}</p>
+            `;
+            
+            problemElement.addEventListener('click', () => {
+                showTimeline(problem);
+            });
+            
+            return problemElement;
+        }
+
+        // Show timeline for a specific problem
+        function showTimeline(problem) {
+            currentProblem = problem;
+            problemsList.style.display = 'none';
+            timelineView.style.display = 'block';
+            timelineTitle.textContent = problem.content.substring(0, 80) + (problem.content.length > 80 ? '...' : '');
+            
+            loadTimelineEvents(problem.id);
+        }
+
+        // Show problems list
+        function showProblemsList() {
+            problemsList.style.display = 'flex';
+            timelineView.style.display = 'none';
+            currentProblem = null;
+            
+            if (timelineListener) {
+                timelineListener();
+                timelineListener = null;
+            }
+        }
+
+        // Load timeline events for a problem
+        function loadTimelineEvents(problemId) {
+            timelineItems.innerHTML = '<div class="loading">Loading timeline...</div>';
+            
+            // Set up real-time listener for timeline events
+            timelineListener = db.collection('timelineEvents')
+                .where('problemId', '==', problemId)
+                .onSnapshot(snapshot => {
+                    timelineItems.innerHTML = '';
+                    
+                    if (snapshot.empty) {
+                        timelineItems.innerHTML = `
+                            <div class="timeline-item">
+                                <div class="timeline-dot"><i class="fas fa-plus"></i></div>
+                                <div class="timeline-item-header">
+                                    <h4 class="timeline-item-title">Problem Created</h4>
+                                    <span class="timeline-item-time">${getTimeAgo(currentProblem.createdAt.toDate())}</span>
+                                </div>
+                                <div class="timeline-item-content">
+                                    ${currentProblem.content}
+                                </div>
+                                <div class="timeline-item-user">
+                                    <div class="user-avatar-sm">${currentProblem.userName ? currentProblem.userName.charAt(0).toUpperCase() : 'U'}</div>
+                                    ${currentProblem.userName || 'Unknown User'}
+                                </div>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // Add the problem creation as the first event
+                    timelineItems.innerHTML += `
+                        <div class="timeline-item">
+                            <div class="timeline-dot"><i class="fas fa-plus"></i></div>
+                            <div class="timeline-item-header">
+                                <h4 class="timeline-item-title">Problem Created</h4>
+                                <span class="timeline-item-time">${getTimeAgo(currentProblem.createdAt.toDate())}</span>
+                            </div>
+                            <div class="timeline-item-content">
+                                ${currentProblem.content}
+                            </div>
+                            <div class="timeline-item-user">
+                                <div class="user-avatar-sm">${currentProblem.userName ? currentProblem.userName.charAt(0).toUpperCase() : 'U'}</div>
+                                ${currentProblem.userName || 'Unknown User'}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add all timeline events
+                    snapshot.forEach(doc => {
+                        const event = doc.data();
+                        const eventElement = createTimelineEventElement(event);
+                        timelineItems.appendChild(eventElement);
+                    });
+                }, error => {
+                    console.error('Error getting timeline events:', error);
+                    timelineItems.innerHTML = '<div class="error">Error loading timeline</div>';
+                });
+        }
+
+        // Create DOM element for a timeline event
+        function createTimelineEventElement(event) {
+            const eventDate = event.createdAt ? event.createdAt.toDate() : new Date();
+            const timeAgo = getTimeAgo(eventDate);
+            
+            const eventElement = document.createElement('div');
+            eventElement.className = `timeline-item ${event.type}`;
+            
+            let icon = 'fas fa-edit';
+            let title = 'Status Update';
+            
+            if (event.type === 'insight') {
+                icon = 'fas fa-lightbulb';
+                title = 'Key Insight';
+            } else if (event.type === 'solution') {
+                icon = 'fas fa-cogs';
+                title = 'Solution Attempt';
+            }
+            
+            eventElement.innerHTML = `
+                <div class="timeline-dot"><i class="${icon}"></i></div>
+                <div class="timeline-item-header">
+                    <h4 class="timeline-item-title">${title}</h4>
+                    <span class="timeline-item-time">${timeAgo}</span>
+                </div>
+                <div class="timeline-item-content">
+                    ${event.content}
+                </div>
+                <div class="timeline-item-user">
+                    <div class="user-avatar-sm">${event.userName ? event.userName.charAt(0).toUpperCase() : 'U'}</div>
+                    ${event.userName || 'Unknown User'}
+                </div>
+            `;
+            
+            return eventElement;
+        }
+
+        // Add a new timeline event
+        function addTimelineEvent() {
+            const activeForm = document.querySelector('.event-form.active');
+            const type = activeForm.id.replace('Form', '');
+            const input = document.getElementById(`${type}Input`);
+            const content = input.value.trim();
+            
+            if (!content) {
+                alert('Please enter content for the event');
+                return;
+            }
+            
+            // Get current user data
+            db.collection('users').doc(currentUser.uid).get()
+                .then(userDoc => {
+                    if (!userDoc.exists) {
+                        alert('User data not found');
+                        return;
+                    }
+                    
+                    const userData = userDoc.data();
+                    
+                    // Add event to Firestore
+                    return db.collection('timelineEvents').add({
+                        problemId: currentProblem.id,
+                        problemTitle: currentProblem.content,
+                        type: type,
+                        content: content,
+                        userId: currentUser.uid,
+                        userName: userData.username,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                })
+                .then(() => {
+                    input.value = '';
+                    alert('Event added to timeline successfully!');
+                })
+                .catch(error => {
+                    console.error('Error adding timeline event:', error);
+                    alert('Error adding event to timeline');
+                });
+        }
+
+        // Filter problems based on search input and active filter
+        function filterProblems() {
+            renderProblems();
+        }
+
+        // Get time ago string
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) {
+                return `${diffInSeconds} seconds ago`;
+            }
+            
+            const diffInMinutes = Math.floor(diffInSeconds / 60);
+            if (diffInMinutes < 60) {
+                return `${diffInMinutes} minutes ago`;
+            }
+            
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            if (diffInHours < 24) {
+                return `${diffInHours} hours ago`;
+            }
+            
+            const diffInDays = Math.floor(diffInHours / 24);
+            if (diffInDays < 30) {
+                return `${diffInDays} days ago`;
+            }
+            
+            return date.toLocaleDateString();
+        }
+
+        // Logout user
+        function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                auth.signOut()
+                    .then(() => {
+                        window.location.href = 'indexz.html';
+                    })
+                    .catch(error => {
+                        console.error('Error signing out:', error);
+                        alert('Error signing out');
+                    });
+            }
+        }
+
+         const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+            window.onscroll = function () {
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                    scrollTopBtn.style.display = "block";
+                } else {
+                    scrollTopBtn.style.display = "none";
+                }
+            };
+
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Void | Tour</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to the official website of Void. Social Network for a World of Problem-Solvers." />
+    <meta name="author" content="Shoaib Ali" />
+    <link rel="icon" type="image/png" href="images.png">
+
+    
+    <meta property="og:title" content="Void" />
+    <meta property="og:description" content="Social Network for a World of Problem-Solvers." />
+    <meta property="og:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta property="og:url" content="https://www.projectvoid.in" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Void" />
+
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Void" />
+    <meta name="twitter:description" content="Social Network for a World of Problem-Solvers." />
+    <meta name="twitter:image" content="https://shoaibali43.github.io/Void/images.png" />
+    <meta name="twitter:site" content="@exploremiracles" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #141414, #202020);
+            padding: 15px;
+            position: relative;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        
+        .background-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(100, 200, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px 15px;
+        }
+        
+.main-header {
+    width: 100%;
+    padding: 15px 20px;
+    color: rgb(187, 147, 110);
+    box-sizing: border-box;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.main-header span {
+    display: inline-block;
+    padding: 5px 10px; 
+    border: 1px solid rgba(187, 147, 110, 0.6);
+    border-radius: 3px; 
+}
+
+
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #4ade80, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        
+        .cards-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            margin-bottom: 30px;
+            perspective: 800px;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(175, 175, 175, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--dark);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateX(100%) scale(0.9);
+        }
+
+        .card.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            z-index: 3;
+        }
+
+        .card.next {
+            opacity: 0.6;
+            transform: translateX(30%) scale(0.85);
+            z-index: 2;
+        }
+
+        .card.prev {
+            opacity: 0.6;
+            transform: translateX(-30%) scale(0.85);
+            z-index: 2;
+        }
+
+        .card.hidden {
+            opacity: 0;
+            transform: translateX(100%) scale(0.8);
+            z-index: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary), var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        
+        .progress {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .progress-dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        
+        .navigation {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .nav-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-height: 44px;
+            
+        }
+
+        .nav-btn i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        .skip-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .skip-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .next-btn {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+        }
+
+        .finish-btn {
+            background: linear-gradient(to right, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .finish-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+        }
+
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, -20px) rotate(120deg);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+                padding: 30px 20px;
+            }
+
+            .logo h1 {
+                font-size: 2.8rem;
+            }
+
+            .logo p {
+                font-size: 1.1rem;
+            }
+
+            .cards-container {
+                height: 300px;
+            }
+
+            .card {
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            .card-icon {
+                font-size: 3rem;
+            }
+
+            .card h2 {
+                font-size: 1.5rem;
+            }
+
+            .card p {
+                font-size: 1rem;
+            }
+
+            .navigation {
+                max-width: 400px;
+            }
+
+            .nav-btn {
+                padding: 14px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 700px;
+            }
+
+            .cards-container {
+                height: 320px;
+            }
+        }
+
+        
+        @media (max-width: 360px) {
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+
+            .cards-container {
+                height: 260px;
+            }
+
+            .card h2 {
+                font-size: 1.1rem;
+            }
+
+            .card p {
+                font-size: 0.85rem;
+            }
+
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }
+
+            .nav-btn i {
+                margin-right: 4px;
+            }
+        }
+
+        
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                min-height: auto;
+                padding: 10px 15px;
+            }
+
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            .cards-container {
+                height: 200px;
+                margin-bottom: 15px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .card-icon {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+            .card h2 {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+
+            .card p {
+                font-size: 0.8rem;
+                margin-bottom: 10px;
+                line-height: 1.3;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-elements" id="backgroundElements"></div>
+
+    <div class="container">
+        <a href="paper.html" style="color: inherit; text-decoration: none;">
+        <header class="main-header">
+            <span>Document Overview</span>
+        </header>
+        </a>
+        <div class="logo">
+            <h1> Void</h1>
+            <p>Collective Problem Solving</p>
+        </div>
+
+        <div class="progress" id="progress">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+
+        <div class="cards-container">
+            
+            <div class="card active" id="card1">
+                <div class="card-icon">
+                    <i class="fa-solid fa-pen-nib"></i>
+                </div>
+                <h2>Post Unsolved Problems</h2>
+                <p>Share challenges that need innovative solutions from our community.</p>
+            </div>
+
+            
+            <div class="card next" id="card2">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2>Collective Brainstorming</h2>
+                <p>Collaborate with diverse minds to refine ideas in real time.</p>
+            </div>
+
+            
+            <div class="card hidden" id="card3">
+                <div class="card-icon">
+                    <i class="fa-solid fa-tag"></i>
+                </div>
+                <h2>Tag-Based Discovery</h2>
+                <p>Explore problems organized by topics that interest you most.</p>
+            </div>
+
+            
+            <div class="card hidden" id="card4">
+                <div class="card-icon">
+                    <i class="fa-solid fa-circle-nodes"></i>
+                </div>
+                <h2>Stay Connected</h2>
+                <p>Join our growing community of problem-solvers and innovators.</p>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn skip-btn" id="skipBtn">
+                <i class="fas fa-forward"></i> Skip
+            </button>
+            <button class="nav-btn next-btn" id="nextBtn">
+                <i class="fas fa-arrow-right"></i> Next
+            </button>
+            <button class="nav-btn finish-btn" id="finishBtn" style="display: none;">
+                <i class="fas fa-check"></i> Start
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Create simplified background elements for better mobile performance
+        function createBackgroundElements() {
+            const container = document.getElementById('backgroundElements');
+
+            // Create fewer floating elements for mobile
+            for (let i = 0; i < 8; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+
+                const size = 30 + Math.random() * 70;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.left = `${Math.random() * 100}%`;
+
+                // Random color with low opacity
+                const colors = [
+                    'rgba(96, 165, 250, 0.08)',
+                    'rgba(139, 92, 246, 0.08)',
+                    'rgba(16, 185, 129, 0.08)',
+                    'rgba(245, 158, 11, 0.08)'
+                ];
+                element.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                // Random animation duration
+                const duration = 20 + Math.random() * 25;
+                element.style.animationDuration = `${duration}s`;
+
+                container.appendChild(element);
+            }
+        }
+
+        // Initialize background
+        createBackgroundElements();
+
+        // Card navigation logic
+        const cards = document.querySelectorAll('.card');
+        const progressDots = document.querySelectorAll('.progress-dot');
+        const nextBtn = document.getElementById('nextBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        const finishBtn = document.getElementById('finishBtn');
+        let currentCardIndex = 0;
+
+        // Update card positions and active states
+        function updateCards() {
+            cards.forEach((card, index) => {
+                card.classList.remove('active', 'next', 'prev', 'hidden');
+
+                if (index === currentCardIndex) {
+                    card.classList.add('active');
+                } else if (index === currentCardIndex + 1) {
+                    card.classList.add('next');
+                } else if (index === currentCardIndex - 1) {
+                    card.classList.add('prev');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Update progress dots
+            progressDots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentCardIndex) {
+                    dot.classList.add('active');
+                }
+            });
+
+            // Show/hide buttons based on current card
+            if (currentCardIndex === cards.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'flex';
+            } else {
+                nextBtn.style.display = 'flex';
+                finishBtn.style.display = 'none';
+            }
+        }
+
+        // Next button click handler
+        nextBtn.addEventListener('click', () => {
+            if (currentCardIndex < cards.length - 1) {
+                currentCardIndex++;
+                updateCards();
+            }
+        });
+
+        // Skip button click handler
+        skipBtn.addEventListener('click', () => {
+            window.location.href = 'indexz.html';
+        });
+
+        // Finish button click handler
+        finishBtn.addEventListener('click', () => {
+            window.location.href = 'indexz.html';
+        });
+
+        // Initialize cards
+        updateCards();
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentCardIndex < cards.length - 1) {
+                currentCardIndex++;
+                updateCards();
+            } else if (e.key === 'ArrowLeft' && currentCardIndex > 0) {
+                currentCardIndex--;
+                updateCards();
+            } else if (e.key === 'Escape' || e.key === 'Enter') {
+                window.location.href = 'indexz.html';
+            }
+        });
+
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const minSwipeDistance = 30; // Reduced for mobile
+
+            if (touchEndX < touchStartX - minSwipeDistance && currentCardIndex < cards.length - 1) {
+                // Swipe left - next card
+                currentCardIndex++;
+                updateCards();
+            }
+
+            if (touchEndX > touchStartX + minSwipeDistance && currentCardIndex > 0) {
+                // Swipe right - previous card
+                currentCardIndex--;
+                updateCards();
+            }
+        }
+
+        // Prevent zoom on double-tap (improved mobile experience)
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+    </script>
+</body>
+
+
+</html>
+

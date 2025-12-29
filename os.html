@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Void OS</title>
+
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+
+        /* BACKGROUND LIQUID GLASS */
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: url('bgg.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 20px;
+        }
+
+        /* MAIN WRAPPER */
+        #ipad {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* HEADER SECTION */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        /* CLOCK */
+        .clock-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #clock {
+            color: white;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 600;
+            font-family: 'MyLocalFont3';
+            text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+        }
+
+        #date {
+            color: white;
+            font-size: clamp(1.8rem, 2vw, 1.8rem);
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        #weekday {
+  font-family: "MyLocalFont"; 
+    font-weight: bold;
+    padding-right: 6px;
+}
+
+#rest {
+   font-family: "MyLocalFont2"; 
+   font-weight: bolder;
+}
+
+/* USER PROFILE SECTION */
+
+        /* CALENDAR AND MEMO CONTAINER */
+        .calendar-memo-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        /* CALENDAR WIDGET */
+        #calendar-widget {
+            width: min(280px, 45vw);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #calendar-widget::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .calendar-header h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-nav-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .calendar-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
+        .calendar-month {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 10px;
+        }
+
+        .weekday {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 2px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-day.other-month {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .calendar-day.today {
+            background: rgba(100, 80, 255, 0.3);
+            font-weight: bold;
+        }
+
+        .calendar-day.selected {
+            background: rgba(100, 80, 255, 0.5);
+            box-shadow: 0 0 8px rgba(100, 80, 255, 0.5);
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 100, 255, 0.8);
+            border-radius: 50%;
+        }
+
+        .calendar-events {
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .calendar-events h4 {
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .event-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 10px;
+            color: white;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 100, 255, 0.8);
+        }
+
+        .event-time {
+            opacity: 0.7;
+            font-size: 0.7rem;
+        }
+
+        /* MEMO SECTION */
+        #memo-section {
+            width: min(280px, 45vw);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #memo-section h3 {
+            color: white;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #add-memo-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        #add-memo-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
+        .memo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .memo-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            font-size: 0.9rem;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .memo-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .memo-text {
+            word-break: break-word;
+            margin-bottom: 8px;
+        }
+
+        .memo-date {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .delete-memo {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .delete-memo:hover {
+            color: rgba(255, 100, 100, 0.9);
+            transform: scale(1.2);
+        }
+
+        /* MODALS */
+        #memo-modal, #calendar-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .memo-modal-content, .calendar-modal-content {
+            background: rgba(30, 20, 50, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            width: min(90%, 400px);
+            box-shadow: 0 0 30px rgba(100, 80, 255, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .memo-modal-content h3, .calendar-modal-content h3 {
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #memo-input, #event-input {
+            width: 100%;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 1rem;
+            resize: none;
+            margin-bottom: 15px;
+        }
+
+        #memo-input:focus, #event-input:focus {
+            outline: none;
+            border-color: rgba(150, 120, 255, 0.5);
+            box-shadow: 0 0 10px rgba(150, 120, 255, 0.3);
+        }
+
+        .event-time-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .event-time-input input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .event-time-input input:focus {
+            outline: none;
+            border-color: rgba(150, 120, 255, 0.5);
+        }
+
+        .memo-modal-buttons, .calendar-modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .memo-modal-btn, .calendar-modal-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #save-memo, #save-event {
+            background: rgba(100, 80, 255, 0.7);
+            color: white;
+        }
+
+        #save-memo:hover, #save-event:hover {
+            background: rgba(120, 100, 255, 0.9);
+        }
+
+        #cancel-memo, #cancel-event {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        #cancel-memo:hover, #cancel-event:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @font-face {
+    font-family: "MyLocalFont";
+    src: url("modernline.otf") format("OpenType");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "MyLocalFont3";
+    src: url("organic.otf") format("OpenType");
+    font-weight: normal;
+    font-style: normal;
+}
+
+ @font-face {
+    font-family: "MyLocalFont2";
+    src: url("marker.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+        .stack {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .quote {
+    display: block;
+    color: rgba(243, 243, 226, 0.753);
+    font-family: "MyLocalFont";
+    margin-bottom: 0.5rem;
+  }
+
+  .tagline {
+    display: block;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.596);
+    font-family: "MyLocalFont2";
+  }
+
+  .user-profile-section {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-left: 50px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ffffff8c, #000000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.username {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.logout-btn {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    transform: scale(1.1);
+}
+
+/* NEW CHAIN SECTION */
+.new-chain-section {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 0 20px;
+}
+
+.chain-card {
+    position: relative;
+   width: 250px;
+    max-width: 320px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 25px;
+    padding: 15px 15px;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 0 30px rgba(129, 129, 129, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    text-align: center;
+}
+
+.chain-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 0 40px rgba(107, 107, 107, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.chain-card:active {
+    transform: translateY(-2px);
+}
+
+.chain-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.chain-icon {
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+    transition: all 0.3s ease;
+}
+
+.chain-card:hover .chain-icon {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.5));
+}
+
+.chain-icon:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.chain-icon:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
+.chain-text {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #ffffff, #e0e0ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shimmer 3s ease-in-out infinite;
+    font-family: 'MyLocalFont2', sans-serif;
+}
+
+/* Liquid animation effects */
+.liquid-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.wave {
+    position: absolute;
+    bottom: -60%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(180, 180, 180, 0.1);
+    border-radius: 40%;
+    animation: liquidFlow 8s infinite linear;
+    opacity: 0.6;
+}
+
+.wave:nth-child(2) {
+    animation-delay: -2s;
+    background: rgba(156, 156, 156, 0.1);
+    border-radius: 38%;
+}
+
+.wave:nth-child(3) {
+    animation-delay: -4s;
+    background: rgba(163, 163, 163, 0.1);
+    border-radius: 42%;
+}
+
+@keyframes liquidFlow {
+    0% {
+        transform: rotate(0deg) translateY(0);
+    }
+    50% {
+        transform: rotate(180deg) translateY(-20px);
+    }
+    100% {
+        transform: rotate(360deg) translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+}
+
+
+        /* APP GRID */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            gap: 20px;
+            padding: 10px 20px 100px 20px;
+            margin: 20px 0;
+        }
+
+        .app {
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .app img {
+            width: 65px;
+            height: 65px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .app p {
+            margin-top: 8px;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: white;
+        }
+
+        .app:hover {
+            transform: scale(1.08);
+        }
+
+        /* DOCK */
+        #dock {
+            width: min(90%, 600px);
+            height: 80px;
+            background: rgba(255, 255, 255, 0.12);
+            border-top-left-radius: 35px;
+            border-top-right-radius: 35px;
+            backdrop-filter: blur(18px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 10px 20px;
+            margin: 0 auto;
+            margin-top: auto;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .dock-app img {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            transition: 0.25s;
+        }
+
+        .dock-app:hover img {
+            transform: translateY(-6px) scale(1.05);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            
+            body {
+            background-image: url('bgg2.jpg');
+        }
+            .header-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .clock-container {
+                align-items: center;
+            }
+
+             .quote {
+    font-size: 0.9rem;
+  }
+
+   .user-profile-section {
+    margin-left: 15px;
+}
+
+   .new-chain-section {
+        margin: 15px 0;
+        padding: 0 15px;
+    }
+    
+    .chain-card {
+   width: 200px;
+        padding: 10px 10px;
+        border-radius: 20px;
+    }
+    
+    .chain-text {
+        font-size: 0.8rem;
+    }
+    
+    .chain-icons {
+        gap: 2px;
+        margin-bottom: 5px;
+    }
+    
+    .chain-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+            .app-grid {
+                grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+                gap: 15px;
+            }
+
+            .app img {
+                width: 55px;
+                height: 55px;
+            }
+
+            #dock {
+                height: 70px;
+                gap: 15px;
+            }
+
+            .dock-app img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .new-chain-section {
+        margin: 10px 0;
+        padding: 0 10px;
+    }
+    
+    .chain-card {
+        padding: 20px 15px;
+        border-radius: 18px;
+    }
+    
+    .chain-text {
+        font-size: 1.1rem;
+    }
+    
+    .chain-icons {
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    
+    .chain-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+            .app-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .app img {
+                width: 50px;
+                height: 50px;
+            }
+
+            #dock {
+                height: 70px;
+                gap: 10px;
+            }
+
+            .dock-app img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="ipad">
+
+        <!-- HEADER SECTION -->
+        <div class="header-section">
+            <!-- CLOCK -->
+            <div class="clock-container">
+                <div id="clock"></div>
+                <div id="date">
+                    <span id="weekday"></span>
+                    <span id="rest"></span>
+                </div>
+            </div>
+
+            <!-- CALENDAR AND MEMO CONTAINER -->
+            <div class="calendar-memo-container">
+                <!-- CALENDAR WIDGET -->
+                <div id="calendar-widget">
+                    <div class="calendar-header">
+                        <h3>Calendar</h3>
+                        <div class="calendar-nav">
+                            <button class="calendar-nav-btn" id="prev-month">‹</button>
+                            <button class="calendar-nav-btn" id="next-month">›</button>
+                        </div>
+                    </div>
+                    <div class="calendar-month" id="current-month">January 2023</div>
+                    <div class="calendar-weekdays">
+                        <div class="weekday">S</div>
+                        <div class="weekday">M</div>
+                        <div class="weekday">T</div>
+                        <div class="weekday">W</div>
+                        <div class="weekday">T</div>
+                        <div class="weekday">F</div>
+                        <div class="weekday">S</div>
+                    </div>
+                    <div class="calendar-days" id="calendar-days">
+                        <!-- Calendar days will be dynamically added here -->
+                    </div>
+                    <div class="calendar-events">
+                        <h4>Today's Events</h4>
+                        <div class="event-list" id="event-list">
+                            <!-- Events will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="combined-section">
+                <!-- MEMO SECTION -->
+                <div id="memo-section">
+                    <h3>Memos <button id="add-memo-btn">+</button></h3>
+                    <div class="memo-list" id="memo-list">
+                        <!-- Memos will be dynamically added here -->
+                    </div>
+                </div>
+
+                <div class="stack">
+                    <span class="quote">Explore the Unknown.</span>
+                    <span class="tagline">Void OS</span>
+                </div>
+
+                <div class="user-profile-section">
+                    <div class="user-info">
+                        <div class="user-avatar" id="user-avatar">U</div>
+                        <span class="username" id="sidebar-username">User</span>
+                        <button class="logout-btn" id="logoutBtn">
+                            <img src="https://img.icons8.com/liquid-glass/24/export.png">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="new-chain-section">
+                    <div class="chain-card" onclick="openApp('chain.html')">
+                        <div class="chain-icons">
+                            <img src="https://img.icons8.com/skeuomorphism/64/edit-property.png" alt="Chain" class="chain-icon">
+                            <img src="https://img.icons8.com/skeuomorphism/64/potted-plant.png" alt="Link" class="chain-icon">
+                            <img src="https://img.icons8.com/skeuomorphism/64/folder-tree.png" alt="Network" class="chain-icon">
+                        </div>
+                        <div class="chain-text">Start a new chain</div>
+                        <div class="liquid-effects">
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+        </div>
+
+        
+
+
+        <!-- APP GRID -->
+        <div class="app-grid">
+            <div class="app" onclick="openApp('dashboard.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/registry-editor.png">
+                <p>Home</p>
+            </div>
+
+            <div class="app" onclick="openApp('users.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/queue.png">
+                <p>Users</p>
+            </div>
+
+            <div class="app" onclick="openApp('chain.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/personal-hotspot.png">
+                <p>Synaptic Chain</p>
+            </div>
+
+            <div class="app" onclick="openApp('profile.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/edit-user.png">
+                <p>Profile</p>
+            </div>
+
+            <div class="app" onclick="openApp('timeline.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/line-chart.png">
+                <p>Timeline</p>
+            </div>
+
+            <div class="app" onclick="openApp('Saved.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/biotech.png">
+                <p>Sequence</p>
+            </div>
+
+            <div class="app" onclick="openApp('status.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/atmospheric-pressure.png">
+                <p>Wave</p>
+            </div>
+
+            <div class="app" onclick="openApp('personal.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/cloud-development.png">
+                <p>Personal Space</p>
+            </div>
+
+            <div class="app" onclick="openApp('voidfeed.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/sine.png">
+                <p>VoidFeed</p>
+            </div>
+
+            <div class="app" onclick="openApp('articles.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/courses.png">
+                <p>Library</p>
+            </div>
+
+            <div class="app" onclick="openApp('node.html')">
+                <img src="https://img.icons8.com/liquid-glass/96/workflow.png">
+                <p>Mind Lattice</p>
+            </div>
+        </div>
+
+        <!-- DOCK -->
+        <div id="dock">
+            <div class="dock-app" onclick="openApp('feature.html')">
+                <img src="https://img.icons8.com/liquid-glass-color/96/light.png">
+            </div>
+            <div class="dock-app" onclick="openApp('about.html')">
+                <img src="https://img.icons8.com/liquid-glass-color/96/module.png">
+            </div>
+            <div class="dock-app" onclick="openApp('time.html')">
+                <img src="https://img.icons8.com/liquid-glass-color/96/clock.png">
+            </div>
+            <div class="dock-app" onclick="openApp('settings.html')">
+                <img src="https://img.icons8.com/liquid-glass-color/96/horizontal-settings-mixer.png">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MEMO MODAL -->
+    <div id="memo-modal">
+        <div class="memo-modal-content">
+            <h3>Add New Memo</h3>
+            <textarea id="memo-input" placeholder="Type your memo here..."></textarea>
+            <div class="memo-modal-buttons">
+                <button id="cancel-memo" class="memo-modal-btn">Cancel</button>
+                <button id="save-memo" class="memo-modal-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CALENDAR EVENT MODAL -->
+    <div id="calendar-modal">
+        <div class="calendar-modal-content">
+            <h3>Add Event</h3>
+            <textarea id="event-input" placeholder="Event description..."></textarea>
+            <div class="event-time-input">
+                <input type="time" id="event-time" value="12:00">
+            </div>
+            <div class="calendar-modal-buttons">
+                <button id="cancel-event" class="calendar-modal-btn">Cancel</button>
+                <button id="save-event" class="calendar-modal-btn">Save Event</button>
+            </div>
+        </div>
+    </div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+
+        const firebaseConfig = {
+                apiKey: "AIzaSyAxQoFW6QiaazIcvkEPsYbnTv7zfKe8c-Y",
+                authDomain: "patternetweb.firebaseapp.com",
+                projectId: "patternetweb",
+                storageBucket: "patternetweb.firebasestorage.app",
+                messagingSenderId: "78400752693",
+                appId: "1:78400752693:web:540fbbcab615e6b078b57c"
+            };
+
+            // Initialize Firebase
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+
+            const auth = firebase.auth();
+            const db = firebase.firestore();
+
+            // Global variables
+            let currentUser = null;
+
+            const userAvatar = document.getElementById('user-avatar');
+                const sidebarUsername = document.getElementById('sidebar-username');
+                const logoutBtn = document.getElementById('logoutBtn');
+
+                // Initialize the application
+                function initAuth() {
+                    // Check authentication state
+                    auth.onAuthStateChanged(async (user) => {
+                        if (user) {
+                            currentUser = user;
+                            console.log('User signed in:', user.uid);
+
+                            // Get user data from Firestore
+                            try {
+                                const userDoc = await db.collection('users').doc(user.uid).get();
+                                if (userDoc.exists) {
+                                    const userData = userDoc.data();
+                                    displayUserInfo(userData);
+                                    setupAuthEventListeners();
+                                } else {
+                                    // Create default user data if not exists
+                                    const defaultUserData = {
+                                        username: user.email.split('@')[0] || 'User',
+                                        email: user.email,
+                                        createdAt: new Date().toISOString()
+                                    };
+                                    await db.collection('users').doc(user.uid).set(defaultUserData);
+                                    displayUserInfo(defaultUserData);
+                                    setupAuthEventListeners();
+                                }
+                            } catch (error) {
+                                console.error('Error getting user document:', error);
+                                // Use default data if Firestore fails
+                                displayUserInfo({ username: 'User' });
+                                setupAuthEventListeners();
+                            }
+                        } else {
+                            // No user is signed in, redirect to login
+                            console.log('No user signed in, redirecting to login...');
+                            window.location.href = 'indexz.html';
+                        }
+                    });
+                }
+
+                // Display user information
+                function displayUserInfo(userData) {
+                    const username = userData.username || 'User';
+                    userAvatar.textContent = username.charAt(0).toUpperCase();
+                    sidebarUsername.textContent = username;
+                }
+
+                // Set up authentication event listeners
+                function setupAuthEventListeners() {
+                    // Logout button
+                    logoutBtn.addEventListener('click', logout);
+                }
+
+                // Logout user
+                function logout() {
+                    if (confirm('Are you sure you want to log out?')) {
+                        auth.signOut().then(() => {
+                            window.location.href = 'indexz.html';
+                        }).catch((error) => {
+                            console.error('Error signing out:', error);
+                            alert('Error signing out. Please try again.');
+                        });
+                    }
+                }
+    document.addEventListener('DOMContentLoaded', initAuth);
+
+        /* REAL TIME CLOCK */
+        function updateClock() {
+            let now = new Date();
+            let hrs = now.getHours();
+            let mins = now.getMinutes();
+            if (mins < 10) mins = "0" + mins;
+            document.getElementById("clock").innerHTML = hrs + ":" + mins;
+
+            let weekday = now.toLocaleDateString("en-US", { weekday: "long" });
+            let rest = now.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+
+            document.getElementById("weekday").textContent = weekday;
+            document.getElementById("rest").textContent = rest;
+
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        /* APP OPEN SIMULATION */
+        function openApp(url) {
+            document.body.style.transition = "0.5s";
+            document.body.style.opacity = "0";
+            setTimeout(() => { window.location.href = url; }, 400);
+        }
+
+        /* MEMO SYSTEM */
+        const memoModal = document.getElementById('memo-modal');
+        const addMemoBtn = document.getElementById('add-memo-btn');
+        const memoInput = document.getElementById('memo-input');
+        const saveMemoBtn = document.getElementById('save-memo');
+        const cancelMemoBtn = document.getElementById('cancel-memo');
+        const memoList = document.getElementById('memo-list');
+
+        // Load memos from localStorage
+        function loadMemos() {
+            const memos = JSON.parse(localStorage.getItem('projectVoidMemos')) || [];
+            displayMemos(memos);
+        }
+
+        // Display memos (max 3)
+        function displayMemos(memos) {
+            memoList.innerHTML = '';
+
+            // Show only the 3 most recent memos
+            const recentMemos = memos.slice(-3);
+
+            recentMemos.forEach((memo, index) => {
+                const memoItem = document.createElement('div');
+                memoItem.className = 'memo-item';
+
+                const memoText = document.createElement('div');
+                memoText.className = 'memo-text';
+                memoText.textContent = memo.text;
+
+                const memoDate = document.createElement('div');
+                memoDate.className = 'memo-date';
+                memoDate.textContent = formatDate(memo.date);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-memo';
+                deleteBtn.innerHTML = '×';
+                deleteBtn.onclick = () => deleteMemo(memo.id);
+
+                memoItem.appendChild(memoText);
+                memoItem.appendChild(memoDate);
+                memoItem.appendChild(deleteBtn);
+
+                memoList.appendChild(memoItem);
+            });
+
+            // Show message if no memos
+            if (recentMemos.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'memo-item';
+                emptyMessage.innerHTML = '<div class="memo-text">No memos yet. Click + to add one.</div>';
+                memoList.appendChild(emptyMessage);
+            }
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Save memo to localStorage
+        function saveMemo() {
+            const memoText = memoInput.value.trim();
+            if (!memoText) return;
+
+            const memos = JSON.parse(localStorage.getItem('projectVoidMemos')) || [];
+            const newMemo = {
+                id: Date.now().toString(),
+                text: memoText,
+                date: new Date().toISOString()
+            };
+
+            memos.push(newMemo);
+            localStorage.setItem('projectVoidMemos', JSON.stringify(memos));
+
+            memoInput.value = '';
+            memoModal.style.display = 'none';
+            loadMemos();
+        }
+
+        // Delete memo
+        function deleteMemo(id) {
+            const memos = JSON.parse(localStorage.getItem('projectVoidMemos')) || [];
+            const updatedMemos = memos.filter(memo => memo.id !== id);
+            localStorage.setItem('projectVoidMemos', JSON.stringify(updatedMemos));
+            loadMemos();
+        }
+
+        // Event listeners for memos
+        addMemoBtn.addEventListener('click', () => {
+            memoModal.style.display = 'flex';
+            memoInput.focus();
+        });
+
+        saveMemoBtn.addEventListener('click', saveMemo);
+
+        cancelMemoBtn.addEventListener('click', () => {
+            memoModal.style.display = 'none';
+            memoInput.value = '';
+        });
+
+        // Close modal when clicking outside
+        memoModal.addEventListener('click', (e) => {
+            if (e.target === memoModal) {
+                memoModal.style.display = 'none';
+                memoInput.value = '';
+            }
+        });
+
+        // Load memos on page load
+        document.addEventListener('DOMContentLoaded', loadMemos);
+
+        /* CALENDAR SYSTEM */
+        const calendarModal = document.getElementById('calendar-modal');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        const calendarDays = document.getElementById('calendar-days');
+        const currentMonthElement = document.getElementById('current-month');
+        const eventList = document.getElementById('event-list');
+        const eventInput = document.getElementById('event-input');
+        const eventTime = document.getElementById('event-time');
+        const saveEventBtn = document.getElementById('save-event');
+        const cancelEventBtn = document.getElementById('cancel-event');
+
+        let currentDate = new Date();
+        let selectedDate = new Date();
+        let events = JSON.parse(localStorage.getItem('projectVoidEvents')) || {};
+
+        // Render calendar
+        function renderCalendar() {
+            // Clear previous calendar days
+            calendarDays.innerHTML = '';
+
+            // Set current month and year
+            const currentMonth = currentDate.getMonth();
+            const currentYear = currentDate.getFullYear();
+
+            // Update month display
+            currentMonthElement.textContent = currentDate.toLocaleDateString('en-US', {
+                month: 'long',
+                year: 'numeric'
+            });
+
+            // Get first day of month and total days
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const totalDays = lastDay.getDate();
+            const firstDayIndex = firstDay.getDay();
+
+            // Previous month days
+            const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
+            for (let i = firstDayIndex - 1; i >= 0; i--) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.textContent = prevMonthLastDay - i;
+                calendarDays.appendChild(dayElement);
+            }
+
+            // Current month days
+            const today = new Date();
+            for (let i = 1; i <= totalDays; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = i;
+
+                const dateKey = `${currentYear}-${currentMonth + 1}-${i}`;
+                
+                // Highlight today
+                if (i === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                    dayElement.classList.add('today');
+                }
+
+                // Highlight selected date
+                if (i === selectedDate.getDate() && currentMonth === selectedDate.getMonth() && currentYear === selectedDate.getFullYear()) {
+                    dayElement.classList.add('selected');
+                }
+
+                // Show event indicator
+                if (events[dateKey] && events[dateKey].length > 0) {
+                    dayElement.classList.add('has-event');
+                }
+
+                // Add click event
+                dayElement.addEventListener('click', () => {
+                    selectedDate = new Date(currentYear, currentMonth, i);
+                    renderCalendar();
+                    showEventsForDate(selectedDate);
+                    
+                    // Open event modal on double click
+                    setTimeout(() => {
+                        calendarModal.style.display = 'flex';
+                        eventInput.focus();
+                    }, 300);
+                });
+
+                calendarDays.appendChild(dayElement);
+            }
+
+            // Next month days
+            const totalCells = 42; // 6 rows x 7 days
+            const nextMonthDays = totalCells - (firstDayIndex + totalDays);
+            for (let i = 1; i <= nextMonthDays; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.textContent = i;
+                calendarDays.appendChild(dayElement);
+            }
+
+            // Show today's events by default
+            showEventsForDate(today);
+        }
+
+        // Show events for specific date
+        function showEventsForDate(date) {
+            eventList.innerHTML = '';
+            
+            const dateKey = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+            const dateEvents = events[dateKey] || [];
+
+            if (dateEvents.length === 0) {
+                const noEvents = document.createElement('div');
+                noEvents.className = 'event-item';
+                noEvents.innerHTML = '<div>No events for today</div>';
+                eventList.appendChild(noEvents);
+                return;
+            }
+
+            dateEvents.forEach((event, index) => {
+                const eventItem = document.createElement('div');
+                eventItem.className = 'event-item';
+                eventItem.innerHTML = `
+                    <div class="event-dot"></div>
+                    <div class="event-time">${event.time}</div>
+                    <div>${event.text}</div>
+                `;
+                eventList.appendChild(eventItem);
+            });
+        }
+
+        // Save event
+        function saveEvent() {
+            const eventText = eventInput.value.trim();
+            if (!eventText) return;
+
+            const dateKey = `${selectedDate.getFullYear()}-${selectedDate.getMonth() + 1}-${selectedDate.getDate()}`;
+            
+            if (!events[dateKey]) {
+                events[dateKey] = [];
+            }
+
+            events[dateKey].push({
+                text: eventText,
+                time: eventTime.value
+            });
+
+            localStorage.setItem('projectVoidEvents', JSON.stringify(events));
+            
+            eventInput.value = '';
+            calendarModal.style.display = 'none';
+            renderCalendar();
+        }
+
+        // Navigation event listeners
+        prevMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        });
+
+        nextMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        });
+
+        // Event modal listeners
+        saveEventBtn.addEventListener('click', saveEvent);
+
+        cancelEventBtn.addEventListener('click', () => {
+            calendarModal.style.display = 'none';
+            eventInput.value = '';
+        });
+
+        // Close modal when clicking outside
+        calendarModal.addEventListener('click', (e) => {
+            if (e.target === calendarModal) {
+                calendarModal.style.display = 'none';
+                eventInput.value = '';
+            }
+        });
+
+        // Initialize calendar
+        document.addEventListener('DOMContentLoaded', renderCalendar);
+    </script>
+
+</body>
+
+</html>
+
