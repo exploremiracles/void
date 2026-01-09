@@ -699,120 +699,136 @@ font-family: 'MyFont';
     </div>
 
     <script>
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const colors = ['#ffffff', '#ffffff', '#ffffff', '#ffffff'];
+    // Create floating particles
+    function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        const colors = ['#ffffff', '#ffffff', '#ffffff', '#ffffff'];
+        
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
             
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 40 + 10;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.opacity = `${Math.random() * 0.1 + 0.05}`;
-                particle.style.animationDuration = `${Math.random() * 30 + 20}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
+            const size = Math.random() * 40 + 10;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.opacity = `${Math.random() * 0.1 + 0.05}`;
+            particle.style.animationDuration = `${Math.random() * 30 + 20}s`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            
+            particlesContainer.appendChild(particle);
         }
+    }
 
-        // Initialize particles
-        createParticles();
+    // Initialize particles
+    createParticles();
 
-        // Enter button handler
-        const enterBtn = document.getElementById('enterBtn');
+    // Enter button handler
+    const enterBtn = document.getElementById('enterBtn');
 
-        enterBtn.addEventListener('click', () => {
-            // Celebration animation
-            enterBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entering Void...';
-            enterBtn.style.background = 'linear-gradient(135deg, #10b981, #0d9488)';
-            enterBtn.disabled = true;
-            
-            // Add particle explosion effect
-            createExplosion();
-            
-            // Smooth page transition
-            setTimeout(() => {
-                document.body.style.opacity = '0';
-                document.body.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => {
-                    window.location.href = 'indexz.html';
-                }, 500);
-            }, 1500);
-        });
-
-        // Particle explosion effect
-        function createExplosion() {
-            const colors = ['#6366f1', '#ec4899', '#10b981', '#f59e0b'];
-            const explosionContainer = document.createElement('div');
-            explosionContainer.style.position = 'fixed';
-            explosionContainer.style.top = '0';
-            explosionContainer.style.left = '0';
-            explosionContainer.style.width = '100%';
-            explosionContainer.style.height = '100%';
-            explosionContainer.style.pointerEvents = 'none';
-            explosionContainer.style.zIndex = '1000';
-            document.body.appendChild(explosionContainer);
-
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.style.position = 'absolute';
-                particle.style.width = '8px';
-                particle.style.height = '8px';
-                particle.style.borderRadius = '50%';
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.left = '50%';
-                particle.style.top = '50%';
-                
-                explosionContainer.appendChild(particle);
-                
-                // Animate particle
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 200 + 100;
-                const x = Math.cos(angle) * speed;
-                const y = Math.sin(angle) * speed;
-                
-                particle.animate([
-                    {
-                        transform: 'translate(-50%, -50%) scale(1)',
-                        opacity: 1
-                    },
-                    {
-                        transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(0)`,
-                        opacity: 0
-                    }
-                ], {
-                    duration: 1000,
-                    easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-                });
-            }
-            
-            // Remove explosion container after animation
-            setTimeout(() => {
-                explosionContainer.remove();
-            }, 1000);
-        }
-
-        // Keyboard shortcut
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                enterBtn.click();
-            }
-        });
-
-        // Add smooth page load animation
-        document.body.style.opacity = '0';
+    enterBtn.addEventListener('click', () => {
+        // Celebration animation
+        enterBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entering Void...';
+        enterBtn.style.background = 'linear-gradient(135deg, #10b981, #0d9488)';
+        enterBtn.disabled = true;
+        
+        // Add particle explosion effect
+        createExplosion();
+        
+        // Smooth page transition
         setTimeout(() => {
-            document.body.style.transition = 'opacity 0.6s ease';
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                window.location.href = 'indexz.html';
+            }, 500);
+        }, 1500);
+    });
+
+    // Particle explosion effect
+    function createExplosion() {
+        const colors = ['#6366f1', '#ec4899', '#10b981', '#f59e0b'];
+        const explosionContainer = document.createElement('div');
+        explosionContainer.style.position = 'fixed';
+        explosionContainer.style.top = '0';
+        explosionContainer.style.left = '0';
+        explosionContainer.style.width = '100%';
+        explosionContainer.style.height = '100%';
+        explosionContainer.style.pointerEvents = 'none';
+        explosionContainer.style.zIndex = '1000';
+        document.body.appendChild(explosionContainer);
+
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.style.position = 'absolute';
+            particle.style.width = '8px';
+            particle.style.height = '8px';
+            particle.style.borderRadius = '50%';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            
+            explosionContainer.appendChild(particle);
+            
+            // Animate particle
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 200 + 100;
+            const x = Math.cos(angle) * speed;
+            const y = Math.sin(angle) * speed;
+            
+            particle.animate([
+                {
+                    transform: 'translate(-50%, -50%) scale(1)',
+                    opacity: 1
+                },
+                {
+                    transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(0)`,
+                    opacity: 0
+                }
+            ], {
+                duration: 1000,
+                easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+            });
+        }
+        
+        // Remove explosion container after animation
+        setTimeout(() => {
+            explosionContainer.remove();
+        }, 1000);
+    }
+
+    // Keyboard shortcut
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            enterBtn.click();
+        }
+    });
+
+    // Add smooth page load animation - FIXED VERSION
+    // Ensure body starts visible
+    document.body.style.opacity = '1';
+    
+    // Apply fade-in animation after page loads
+    window.addEventListener('load', function() {
+        // Reset to trigger animation
+        document.body.style.opacity = '0';
+        // Force reflow
+        void document.body.offsetWidth;
+        // Animate in
+        document.body.style.transition = 'opacity 0.6s ease';
+        document.body.style.opacity = '1';
+    });
+
+    // Handle pageshow event for back/forward navigation
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+            // Page was restored from bfcache - ensure it's visible
             document.body.style.opacity = '1';
-        }, 100);
-    </script>
+        }
+    });
+</script>
 </body>
 </html>
