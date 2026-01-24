@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>VOID | Quantum Thought Network</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quantum Thought Network - A never-before-seen interface for collective intelligence." />
+    
+    <style>
+        :root {
+            --pure-black: #000000;
+            --deep-black: #0a0a0a;
+            --off-black: #111111;
+            --pure-white: #ffffff;
+            --soft-white: rgba(255, 255, 255, 0.95);
+            --medium-white: rgba(255, 255, 255, 0.7);
+            --light-white: rgba(255, 255, 255, 0.5);
+            --faint-white: rgba(255, 255, 255, 0.3);
+            --subtle-white: rgba(255, 255, 255, 0.1);
+            --ultra-thin: 0.5px;
+            --thin: 1px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--pure-black);
+            color: var(--pure-white);
+            min-height: 100vh;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            overflow-x: hidden;
+            position: relative;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Quantum Background Grid */
+        .quantum-grid {
+            position: fixed;
+            width: 400%;
+            height: 400%;
+            background-image: 
+                linear-gradient(var(--subtle-white) var(--ultra-thin), transparent var(--ultra-thin)),
+                linear-gradient(90deg, var(--subtle-white) var(--ultra-thin), transparent var(--ultra-thin));
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg) translateZ(-100px);
+            animation: gridFlow 40s linear infinite;
+            z-index: -2;
+        }
+
+        @keyframes gridFlow {
+            0% { transform: perspective(500px) rotateX(60deg) translateZ(-100px) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateZ(-100px) translateY(60px); }
+        }
+
+        /* Main Container - Quantum Frame */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Quantum Frame Border */
+        .container::before {
+            content: '';
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: var(--ultra-thin) solid var(--faint-white);
+            border-image: linear-gradient(45deg, var(--pure-white), transparent, var(--pure-white)) 1;
+            pointer-events: none;
+            z-index: -1;
+            animation: borderPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Research Overview Link */
+        .research-overview {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        .research-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--subtle-white);
+            border: var(--ultra-thin) solid var(--light-white);
+            color: var(--medium-white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--subtle-white), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .research-link:hover::before {
+            left: 100%;
+        }
+
+        .research-link:hover {
+            color: var(--pure-white);
+            border-color: var(--pure-white);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--subtle-white);
+        }
+
+        .research-icon {
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .research-link:hover .research-icon {
+            transform: translateX(3px);
+        }
+
+        /* Header - Quantum Signature */
+        .quantum-header {
+            margin-bottom: 4rem;
+            position: relative;
+            padding-top: 5rem;
+        }
+
+        .quantum-logo {
+            font-size: 4rem;
+            font-weight: 100;
+            letter-spacing: -0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-glyph {
+            position: relative;
+            display: inline-block;
+            color: var(--pure-white);
+        }
+
+        .logo-glyph::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: var(--ultra-thin);
+            background: var(--pure-white);
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: glyphReveal 2s ease-out forwards;
+        }
+
+        @keyframes glyphReveal {
+            to { transform: scaleX(1); }
+        }
+
+        .quantum-subtitle {
+            font-size: 0.85rem;
+            color: var(--medium-white);
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            margin-left: 0.5rem;
+            opacity: 0;
+            animation: subtitleFadeIn 1s ease-out 1s forwards;
+            font-weight: 400;
+        }
+
+        @keyframes subtitleFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Quantum Thought Stream */
+        .thought-stream {
+            position: relative;
+        }
+
+        /* Thought Node - Quantum Entanglement Style */
+        .thought-node {
+            margin-bottom: 4rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px) rotateX(30deg);
+            animation: thoughtAppear 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes thoughtAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        /* Node Timeline */
+        .node-timeline {
+            position: absolute;
+            left: -3rem;
+            top: 0;
+            width: var(--ultra-thin);
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent, 
+                var(--pure-white), 
+                transparent);
+            opacity: 0.2;
+        }
+
+        .node-pulse {
+            position: absolute;
+            left: -3rem;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--pure-white);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(0);
+                box-shadow: 0 0 0 0 var(--subtle-white);
+            }
+            50% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 10px transparent;
+            }
+        }
+
+        /* Node Content - Quantum State Representation */
+        .node-content {
+            padding-left: 4rem;
+            position: relative;
+        }
+
+        .node-matrix {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1px;
+            opacity: 0.3;
+        }
+
+        .matrix-cell {
+            background: var(--pure-white);
+            animation: matrixFlicker 2s infinite;
+        }
+
+        @keyframes matrixFlicker {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.8; }
+        }
+
+        .node-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            color: var(--pure-white);
+            letter-spacing: -0.02em;
+        }
+
+        .node-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: var(--ultra-thin);
+            background: linear-gradient(90deg, 
+                var(--pure-white), 
+                transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+
+        .thought-node:hover .node-title::after {
+            transform: scaleX(1);
+        }
+
+        .node-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--medium-white);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 2rem;
+            font-weight: 300;
+        }
+
+        .node-description::before {
+            content: '⟩';
+            position: absolute;
+            left: 0;
+            color: var(--pure-white);
+            opacity: 0.5;
+        }
+
+        /* Quantum Tags - Orbital Display */
+        .node-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 2rem;
+            padding-left: 2rem;
+        }
+
+        .quantum-tag {
+            padding: 0.4rem 1rem;
+            background: var(--subtle-white);
+            border: var(--ultra-thin) solid var(--light-white);
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--medium-white);
+            letter-spacing: 0.05em;
+        }
+
+        .quantum-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--subtle-white), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .quantum-tag:hover::before {
+            left: 100%;
+        }
+
+        .quantum-tag:hover {
+            background: var(--subtle-white);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--subtle-white);
+            color: var(--pure-white);
+        }
+
+        /* Quantum Access Terminal */
+        .quantum-terminal {
+            margin-top: 6rem;
+            border-top: var(--ultra-thin) solid var(--subtle-white);
+            padding-top: 3rem;
+            position: relative;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .terminal-prompt {
+            color: var(--medium-white);
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: var(--pure-white);
+            font-family: inherit;
+            font-size: 1.2rem;
+            width: 100%;
+            outline: none;
+            caret-color: var(--pure-white);
+            animation: cursorBlink 1s infinite;
+            font-weight: 300;
+        }
+
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .access-button {
+            position: absolute;
+            right: 0;
+            top: 3rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: var(--ultra-thin) solid var(--pure-white);
+            color: var(--pure-white);
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+        }
+
+        .access-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--pure-white);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .access-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .access-button:hover span {
+            position: relative;
+            z-index: 1;
+            color: var(--pure-black);
+        }
+
+        .access-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Quantum Footer */
+        .quantum-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: var(--ultra-thin) solid var(--subtle-white);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--light-white);
+            font-weight: 300;
+        }
+
+        .quantum-link {
+            color: var(--pure-white);
+            text-decoration: none;
+            position: relative;
+            padding: 0 0.5rem;
+            font-weight: 400;
+        }
+
+        .quantum-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: var(--ultra-thin);
+            background: var(--pure-white);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .quantum-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .container::before {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+            
+            .research-overview {
+                top: 1.5rem;
+                left: 1.5rem;
+                right: 1.5rem;
+                text-align: center;
+            }
+            
+            .research-link {
+                justify-content: center;
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .quantum-header {
+                padding-top: 4rem;
+                margin-bottom: 3rem;
+            }
+            
+            .quantum-logo {
+                font-size: 3rem;
+                letter-spacing: -0.3rem;
+            }
+            
+            .node-content {
+                padding-left: 2rem;
+            }
+            
+            .node-timeline,
+            .node-pulse {
+                left: -1.5rem;
+            }
+            
+            .access-button {
+                position: relative;
+                width: 100%;
+                margin-top: 2rem;
+                text-align: center;
+            }
+            
+            .node-title {
+                font-size: 1.5rem;
+            }
+            
+            .node-description {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--pure-white);
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--subtle-white);
+            color: var(--pure-white);
+        }
+
+        /* Focus States */
+        *:focus {
+            outline: var(--ultra-thin) solid var(--pure-white);
+            outline-offset: 2px;
+        }
+
+        /* Loading Animation */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .loading-shimmer {
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--subtle-white), 
+                transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Quantum Grid Background -->
+    <div class="quantum-grid"></div>
+
+    <div class="container">
+        <!-- Research Overview Link -->
+        <div class="research-overview">
+            <a href="paper.html" class="research-link">
+                <span class="research-icon">📄</span>
+                <span>DOCUMENT OVERVIEW</span>
+            </a>
+        </div>
+
+        <!-- Quantum Header -->
+        <header class="quantum-header">
+            <div class="quantum-logo">
+                <span class="logo-glyph">V</span>
+                <span class="logo-glyph">O</span>
+                <span class="logo-glyph">I</span>
+                <span class="logo-glyph">D</span>
+            </div>
+            <div class="quantum-subtitle">A Social Network for Collective Problem-Solving</div>
+        </header>
+
+        <!-- Quantum Thought Stream -->
+        <main class="thought-stream">
+            <!-- Thought Node 1 -->
+            <article class="thought-node" style="animation-delay: 0.1s">
+                <div class="node-timeline"></div>
+                <div class="node-pulse" style="animation-delay: 0.5s"></div>
+                <div class="node-content">
+                    <div class="node-matrix">
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                    </div>
+                    <h2 class="node-title">Post Unsolved Challenges</h2>
+                    <p class="node-description">
+                        Share complex problems that require innovative thinking. Get solutions from diverse perspectives across our global community.
+                    </p>
+                    <div class="node-tags">
+                        <span class="quantum-tag">Problem-Solving</span>
+                        <span class="quantum-tag">Innovation</span>
+                        <span class="quantum-tag">Global Network</span>
+                        <span class="quantum-tag">Community</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Thought Node 2 -->
+            <article class="thought-node" style="animation-delay: 0.3s">
+                <div class="node-timeline"></div>
+                <div class="node-pulse" style="animation-delay: 1.5s"></div>
+                <div class="node-content">
+                    <div class="node-matrix">
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                    </div>
+                    <h2 class="node-title">Collective Brainstorming</h2>
+                    <p class="node-description">
+                        Collaborate with thinkers from different fields. Refine ideas through real-time discussion and collective intelligence.
+                    </p>
+                    <div class="node-tags">
+                        <span class="quantum-tag">Collaboration</span>
+                        <span class="quantum-tag">Discussion</span>
+                        <span class="quantum-tag">Real-time</span>
+                        <span class="quantum-tag">Research</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Thought Node 3 -->
+            <article class="thought-node" style="animation-delay: 0.5s">
+                <div class="node-timeline"></div>
+                <div class="node-pulse" style="animation-delay: 2.5s"></div>
+                <div class="node-content">
+                    <div class="node-matrix">
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                    </div>
+                    <h2 class="node-title">Intelligent Discovery</h2>
+                    <p class="node-description">
+                        Explore problems organized by topics that match your expertise. Smart tagging system for seamless navigation.
+                    </p>
+                    <div class="node-tags">
+                        <span class="quantum-tag">Discovery</span>
+                        <span class="quantum-tag">Organization</span>
+                        <span class="quantum-tag">Smart Tags</span>
+                        <span class="quantum-tag">Intelligent</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Thought Node 4 -->
+            <article class="thought-node" style="animation-delay: 0.7s">
+                <div class="node-timeline"></div>
+                <div class="node-pulse" style="animation-delay: 3.5s"></div>
+                <div class="node-content">
+                    <div class="node-matrix">
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                        <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
+                    </div>
+                    <h2 class="node-title">Connected Community</h2>
+                    <p class="node-description">
+                        Join a growing network of problem-solvers, innovators, and thinkers who are shaping the future together.
+                    </p>
+                    <div class="node-tags">
+                        <span class="quantum-tag">Network</span>
+                        <span class="quantum-tag">Synaptic</span>
+                        <span class="quantum-tag">Chain</span>
+                        <span class="quantum-tag">Ideas</span>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <!-- Quantum Access Terminal -->
+        <section class="quantum-terminal">
+            <div class="terminal-header">
+                <span class="terminal-prompt">void@exploremiracles:) </span>
+                <input type="text" class="terminal-input" value="waiting..." readonly>
+            </div>
+            <button class="access-button" id="quantumAccess">
+                <span>Enter VOID</span>
+            </button>
+        </section>
+
+        <!-- Quantum Footer -->
+        <footer class="quantum-footer">
+            <p>Project Void</p>
+            <p>A project by <a href="https://projectvoid.in" class="quantum-link">EXPLORE MIRACLES</a></p>
+            <p style="margin-top: 1rem; font-size: 0.7rem; opacity: 0.3; font-weight: 300;">
+                TACKLING PROGRAMMING COMPLEXITIES...
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Quantum access button effect
+        document.getElementById('quantumAccess').addEventListener('click', function() {
+            // Create quantum ripple
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+                transform: translate(-50%, -50%);
+                animation: quantumRipple 1s ease-out forwards;
+                z-index: 1000;
+                pointer-events: none;
+            `;
+            
+            document.body.appendChild(ripple);
+            
+            // Add ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes quantumRipple {
+                    0% {
+                        width: 0;
+                        height: 0;
+                        opacity: 1;
+                    }
+                    100% {
+                        width: 200vh;
+                        height: 200vh;
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Update button state
+            this.innerHTML = '<span>Entering Void...</span>';
+            this.disabled = true;
+            
+            // Quantum tunnel effect on all thought nodes
+            const nodes = document.querySelectorAll('.thought-node');
+            nodes.forEach((node, index) => {
+                setTimeout(() => {
+                    node.style.transform = `translateY(-20px) scale(0.95)`;
+                    node.style.opacity = '0.7';
+                    node.style.filter = 'blur(2px)';
+                }, index * 100);
+            });
+            
+            // Quantum tunnel sequence
+            setTimeout(() => {
+                document.body.style.overflow = 'hidden';
+                
+                // Create tunnel effect
+                const tunnel = document.createElement('div');
+                tunnel.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: 
+                        repeating-radial-gradient(
+                            circle at 50% 50%,
+                            transparent 0,
+                            var(--pure-black) 100px
+                        );
+                    animation: tunnelSpin 2s linear forwards;
+                    z-index: 1001;
+                    pointer-events: none;
+                `;
+                
+                document.body.appendChild(tunnel);
+                
+                // Add tunnel animation
+                const tunnelStyle = document.createElement('style');
+                tunnelStyle.textContent = `
+                    @keyframes tunnelSpin {
+                        0% {
+                            transform: scale(0.1) rotate(0deg);
+                            opacity: 0;
+                        }
+                        50% {
+                            transform: scale(1) rotate(180deg);
+                            opacity: 1;
+                        }
+                        100% {
+                            transform: scale(10) rotate(360deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(tunnelStyle);
+                
+                // Redirect after tunnel
+                setTimeout(() => {
+                    window.location.href = 'indexz.html';
+                }, 2000);
+                
+            }, 1000);
+        });
+
+        // Interactive thought nodes
+        document.querySelectorAll('.thought-node').forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                const pulse = node.querySelector('.node-pulse');
+                pulse.style.animationDuration = '1s';
+                pulse.style.animationIterationCount = 'infinite';
+                
+                // Matrix activation
+                const matrix = node.querySelector('.node-matrix');
+                matrix.style.opacity = '0.8';
+                
+                // Quantum vibration effect
+                node.style.transform = 'translateX(10px)';
+            });
+            
+            node.addEventListener('mouseleave', () => {
+                const pulse = node.querySelector('.node-pulse');
+                pulse.style.animationDuration = '4s';
+                
+                const matrix = node.querySelector('.node-matrix');
+                matrix.style.opacity = '0.3';
+                
+                node.style.transform = 'translateX(0)';
+            });
+            
+            // Click to focus
+            node.addEventListener('click', () => {
+                document.querySelectorAll('.thought-node').forEach(n => {
+                    n.style.filter = 'blur(3px)';
+                    n.style.opacity = '0.3';
+                });
+                
+                node.style.filter = 'none';
+                node.style.opacity = '1';
+                node.style.transform = 'scale(1.02)';
+                
+                setTimeout(() => {
+                    document.querySelectorAll('.thought-node').forEach(n => {
+                        n.style.filter = 'none';
+                        n.style.opacity = '1';
+                        n.style.transform = 'none';
+                    });
+                }, 2000);
+            });
+        });
+
+        // Terminal interaction
+        const terminalInput = document.querySelector('.terminal-input');
+        terminalInput.addEventListener('focus', () => {
+            terminalInput.value = '';
+            terminalInput.style.animation = 'cursorBlink 0.8s infinite';
+        });
+        
+        terminalInput.addEventListener('blur', () => {
+            terminalInput.value = 'waiting...';
+            terminalInput.style.animation = 'cursorBlink 1s infinite';
+        });
+        
+        // Quantum typing effect on focus
+        terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('quantumAccess').click();
+            }
+        });
+
+        // Quantum parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 2 - 1;
+            const y = (e.clientY / window.innerHeight) * 2 - 1;
+            
+            // Subtle grid movement
+            const grid = document.querySelector('.quantum-grid');
+            grid.style.transform = `
+                perspective(500px) 
+                rotateX(60deg) 
+                translateZ(-100px)
+                translateY(${y * 10}px)
+                translateX(${x * 10}px)
+            `;
+        });
+
+        // Initialize quantum environment
+        window.addEventListener('DOMContentLoaded', () => {
+            // Quantum state initialization
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 1s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+            
+            // Animate thought nodes sequentially
+            const nodes = document.querySelectorAll('.thought-node');
+            nodes.forEach((node, index) => {
+                node.style.animationDelay = `${index * 0.2 + 0.1}s`;
+            });
+            
+            // Console welcome message
+            console.log('%c🔳 VOID QUANTUM NETWORK INITIALIZED', 
+                'color: white; font-size: 14px; font-weight: 300; font-family: monospace;');
+            console.log('%cMonochrome quantum field active. Thought stream flowing.', 
+                'color: rgba(255, 255, 255, 0.7); font-family: monospace;');
+        });
+
+        // Handle back navigation
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                location.reload();
+            }
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Space to trigger access
+            if (e.key === ' ' && e.target === document.body) {
+                e.preventDefault();
+                document.getElementById('quantumAccess').click();
+            }
+            
+            // Escape to reset view
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.thought-node').forEach(node => {
+                    node.style.filter = 'none';
+                    node.style.opacity = '1';
+                    node.style.transform = 'none';
+                });
+            }
+            
+            // Number keys to focus nodes
+            if (e.key >= '1' && e.key <= '4') {
+                const index = parseInt(e.key) - 1;
+                const nodes = document.querySelectorAll('.thought-node');
+                if (nodes[index]) {
+                    nodes[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    nodes[index].focus();
+                }
+            }
+            
+            // R key to go to research page
+            if (e.key === 'r' || e.key === 'R') {
+                window.location.href = 'paper.html';
+            }
+        });
+
+        // Add touch interaction for mobile
+        let touchStartY = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!e.touches) return;
+            
+            const touchY = e.touches[0].clientY;
+            const deltaY = touchY - touchStartY;
+            
+            // Subtle parallax effect on touch
+            const grid = document.querySelector('.quantum-grid');
+            grid.style.transform = `
+                perspective(500px) 
+                rotateX(60deg) 
+                translateZ(-100px)
+                translateY(${deltaY * 0.1}px)
+            `;
+        });
+
+        // Add loading shimmer effect to button on hover
+        const accessButton = document.getElementById('quantumAccess');
+        accessButton.addEventListener('mouseenter', () => {
+            accessButton.classList.add('loading-shimmer');
+        });
+
+        accessButton.addEventListener('mouseleave', () => {
+            accessButton.classList.remove('loading-shimmer');
+        });
+
+        // Research link hover effect
+        const researchLink = document.querySelector('.research-link');
+        researchLink.addEventListener('mouseenter', () => {
+            researchLink.classList.add('loading-shimmer');
+        });
+
+        researchLink.addEventListener('mouseleave', () => {
+            researchLink.classList.remove('loading-shimmer');
+        });
+
+        // Auto-focus terminal after load
+        // Auto-focus terminal after load but don't scroll
+
+    </script>
+</body>
+</html>
