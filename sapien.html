@@ -425,12 +425,13 @@ body::before {
         }
 
         /* PODCASTS GRID */
-        .podcasts-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2rem;
-            margin-bottom: 8rem;
-        }
+        /* PODCASTS GRID */
+.podcasts-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 8rem;
+}
 
         /* PODCAST CARD */
 .podcast-card {
@@ -1430,8 +1431,8 @@ body::before {
             }
 
             .podcasts-container {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
             }
 
             .filter-bar {
@@ -1496,34 +1497,116 @@ body::before {
                 font-size: 2rem;
             }
 
-            .podcast-content {
-                padding: 1rem;
-            }
-
-            .podcast-title {
-                font-size: 1.1rem;
-            }
-
-            .podcast-image {
-                height: 180px;
-            }
-            
-               .captions-container {
-        min-height: 45px;
+    .podcasts-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+    
+    .podcast-card {
+        margin: 0;
+    }
+    
+    .podcast-image {
+        height: 120px;
+    }
+    
+    .podcast-content {
+        padding: 0.8rem;
+    }
+    
+    .podcast-title {
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+    }
+    
+    .podcast-plays {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+    }
+    
+    .podcast-details {
+        gap: 0.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .detail-row {
+        font-size: 0.7rem;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+    
+    .detail-row i {
+        width: 12px;
+        font-size: 0.7rem;
+    }
+    
+    .speaker-tag {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.4rem;
+    }
+    
+    .book-trained {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.4rem;
+    }
+    
+    .podcast-description {
+        font-size: 0.75rem;
+        -webkit-line-clamp: 2;
+        margin-bottom: 0.8rem;
+    }
+    
+    .player-controls {
+        gap: 0.5rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .player-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+        padding: 0.3rem;
+    }
+    
+    .play-pause-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    
+    .language-dropdown {
+        min-width: 80px;
+        padding: 0.3rem;
+    }
+    
+    .lang-option {
+        padding: 0.3rem;
+        font-size: 0.7rem;
+    }
+    
+    .player-time {
+        font-size: 0.65rem;
+    }
+    
+    .captions-container {
+        min-height: 35px;
+        padding: 0.3rem;
         padding-right: 1.8rem;
     }
     
     .caption-text {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
+        padding: 0.25rem;
         max-width: calc(100% - 30px);
         margin-right: 20px;
     }
     
     .captions-toggle {
-        padding: 0.25rem 0.4rem;
-        font-size: 0.65rem;
-        min-width: 24px;
-        min-height: 20px;
+        padding: 0.2rem 0.4rem;
+        font-size: 0.6rem;
+        min-width: 22px;
+        min-height: 18px;
+        right: 4px;
     }
 }
         /* SCROLLBAR */
